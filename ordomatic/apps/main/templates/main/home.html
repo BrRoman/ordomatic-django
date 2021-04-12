@@ -3,9 +3,5 @@
 {% block content %}
     <h1>Welcome to Ordomatic!</h1>
 
-    <div id="get_easter" class="d-flex flex-column align-items-center m-5">
-        <input type="number" id="year" class="mb-3" value="2021">
-    </div>
-
-    <div id="easter"></div>
+    <a href={% url 'main:ordo' current_year %}>Create an ordo</a>
 {% endblock content %}

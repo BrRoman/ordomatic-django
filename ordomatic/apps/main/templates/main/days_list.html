@@ -1,0 +1,17 @@
+<!-- List of days of page ordo. -->
+
+<table class="table table-sm table-bordered">
+    <tr>
+        <th class="text-center">Day</th>
+        <th class="text-center">Tempo</th>
+        <th class="text-center">Sancto</th>
+    </tr>
+
+    {% for day in days %}
+        <tr>
+            <td class="day">{{ day }}</td>
+            <td class="tempo">Easter + {{ forloop.counter0 }}</td>
+            <td class="sancto">Sancto</td>
+        </tr>
+    {% endfor %}
+</table>

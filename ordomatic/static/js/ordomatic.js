@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    $('#get_easter').click(function (e) { 
-        const year = $(this).find('#year').val();
+    $('#year').click(function(){
+        const year = $(this).val();
         $.get(
-            '/ordomatic/get_easter/' + year,
+            '/ordomatic/get_list_of_days/' + year,
             function(back){
-                $('#easter').html(back);
+                $('#days_list').html(back);
             },
             'html',
-        )
-    });
+        );
+    }).trigger('click');
 });

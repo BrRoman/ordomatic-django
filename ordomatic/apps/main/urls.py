@@ -6,6 +6,19 @@ from . import views
 
 app_name = 'main'
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('get_easter/<int:year>/', views.get_easter, name='get_easter'),
+    path(
+        '',
+        views.home,
+        name='home',
+    ),
+    path(
+        'ordo/<int:year>',
+        views.ordo,
+        name='ordo',
+    ),
+    path(
+        'get_list_of_days/<int:year>/',
+        views.get_list_of_days,
+        name='get_list_of_days',
+    ),
 ]
