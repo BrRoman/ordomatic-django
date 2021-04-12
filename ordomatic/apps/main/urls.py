@@ -17,8 +17,8 @@ urlpatterns = [
         name='ordo',
     ),
     path(
-        'get_list_of_days/<int:year>/',
-        views.get_list_of_days,
-        name='get_list_of_days',
+        'get_list_of_days_as_html/<int:year>/',
+        views.get_list_of_days_as_html,
+        name='get_list_of_days_as_html',
     ),
 ]

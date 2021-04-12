@@ -29,8 +29,8 @@ def ordo(request, **kwargs):
     )
 
 
-def get_list_of_days(request, **kwargs):
-    """ Returns a list of the days of the given year. """
+def get_list_of_days_as_html(request, **kwargs):
+    """ Returns a list of the days of the given year as html. """
     easter = calculate_easter(kwargs['year'])
     days = []
     for i in range(50):
