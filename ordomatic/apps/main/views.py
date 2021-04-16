@@ -5,6 +5,7 @@ from datetime import date, timedelta
 from django.shortcuts import render
 
 from .dates import calculate_easter
+from .models import DaySancto, DayTempo
 
 
 def home(request):
@@ -31,10 +32,22 @@ def ordo(request, **kwargs):
 
 def get_list_of_days_as_html(request, **kwargs):
     """ Returns a list of the days of the given year as html. """
+    days = {}
+
+    # Easter days:
+    easter_days = DayTempo.objects.filter(baseline='easter').order_by('add')
     easter = calculate_easter(kwargs['year'])
-    days = []
-    for i in range(50):
-        days.append(easter + timedelta(i))
+    for index, easter_day in enumerate(easter_days):
+        date = easter + timedelta(days=easter_day.add)
+        days[date] = {}
+        days[date]['tempo'] = easter_day
+        sancto = DaySancto.objects.filter(
+            month=date.month,
+            day=date.day,
+        )
+        if sancto:
+            days[date]['sancto'] = sancto[0]
+
     return render(
         request,
         'main/days_list.html',

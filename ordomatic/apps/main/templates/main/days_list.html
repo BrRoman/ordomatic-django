@@ -7,11 +7,14 @@
         <th class="text-center">Sancto</th>
     </tr>
 
-    {% for day in days %}
+    {% for date, day in days.items %}
         <tr>
-            <td class="day">{{ day }}</td>
-            <td class="tempo">Easter + {{ forloop.counter0 }}</td>
-            <td class="sancto">Sancto</td>
+            <td class="col-4 date">{{ date|date:'l F j Y' }}</td>
+            <td class="col-4 tempo">{{ day.tempo }} [{{ day.tempo.force }}]</div></td>
+            <td class="col-4 sancto">
+                {% if day.sancto %}
+                    {{ day.sancto }} [{{ day.sancto.force }}]
+                {% endif %}</td>
         </tr>
     {% endfor %}
 </table>
