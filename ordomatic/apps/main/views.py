@@ -32,27 +32,43 @@ def ordo(request, **kwargs):
 
 def get_list_of_days_as_html(request, **kwargs):
     """ Returns a list of the days of the given year as html. """
-    days = {}
+    year = kwargs['year']
+    days = {}  # 'date': {'tempo': object, 'sancto': object}
 
-    # Easter days:
+    # Christmas time:
+    christmas_days = DayTempo.objects.filter(baseline='start').order_by('add')
+    christmas = date(year - 1, 12, 25)
+    christmas_weekday = christmas.weekday()
+    start = christmas - timedelta(days=22 + christmas_weekday)
+    for index, christmas_day in enumerate(christmas_days):
+        key = start + timedelta(days=christmas_day.add)
+        days[key] = {}
+        days[key]['tempo'] = christmas_day
+        sancto = DaySancto.objects.filter(
+            month=key.month,
+            day=key.day,
+        )
+        if sancto:
+            days[key]['sancto'] = sancto[0]
+
+    # Easter time:
     easter_days = DayTempo.objects.filter(baseline='easter').order_by('add')
     easter = calculate_easter(kwargs['year'])
     for index, easter_day in enumerate(easter_days):
-        date = easter + timedelta(days=easter_day.add)
-        days[date] = {}
-        days[date]['tempo'] = easter_day
+        key = easter + timedelta(days=easter_day.add)
+        days[key] = {}
+        days[key]['tempo'] = easter_day
         sancto = DaySancto.objects.filter(
-            month=date.month,
-            day=date.day,
+            month=key.month,
+            day=key.day,
         )
         if sancto:
-            days[date]['sancto'] = sancto[0]
+            days[key]['sancto'] = sancto[0]
 
     return render(
         request,
         'main/days_list.html',
         {
-            'year': kwargs['year'],
             'days': days,
         },
     )
