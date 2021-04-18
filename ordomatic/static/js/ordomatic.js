@@ -8,5 +8,13 @@ $(document).ready(function () {
             },
             'html',
         );
+
+        $.get(
+            '/ordomatic/get_ordo_output_as_html/' + year,
+            function(back){
+                $('#ordo_output').html(back);
+            },
+            'html',
+        );
     }).trigger('click');
 });

@@ -1,0 +1,30 @@
+<!-- Ordo output -->
+
+
+{% for date, day in days.items %}
+    {% ifchanged date|date:'Y' %}
+        <h2 class="text-center">{{ date|date:'Y' }}</h2>
+    {% endifchanged %}
+
+    {% ifchanged date|date:'F' %}
+        <h3 class="text-center">{{ date|date:'F' }}</h3>
+    {% endifchanged %}
+
+    {% if day.sancto and day.sancto.force > day.tempo.force %}
+        <p class="header font-weight-bold mb-0">
+            {{ date|date:'j' }} - 
+            {{ day.sancto.header|default_if_none:'' }}
+        <p class="body">
+            {{ day.sancto.body|default_if_none:'' }}
+        </p>
+
+    {% else %}
+        <p class="header font-weight-bold mb-0">
+            {{ date|date:'j' }} - 
+            {{ day.tempo.header|default_if_none:'' }}
+        </p>
+        <p class="body">
+            {{ day.tempo.body|default_if_none:'' }}
+        </p>
+    {% endif %}
+{% endfor %}

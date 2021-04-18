@@ -21,4 +21,9 @@ urlpatterns = [
         views.get_list_of_days_as_html,
         name='get_list_of_days_as_html',
     ),
+    path(
+        'get_ordo_output_as_html/<int:year>/',
+        views.get_ordo_output_as_html,
+        name='get_ordo_output_as_html',
+    ),
 ]
