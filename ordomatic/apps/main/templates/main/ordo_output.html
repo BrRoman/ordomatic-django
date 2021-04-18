@@ -2,28 +2,38 @@
 
 
 {% for date, day in days.items %}
+    <!-- Year -->
     {% ifchanged date|date:'Y' %}
         <h2 class="text-center">{{ date|date:'Y' }}</h2>
     {% endifchanged %}
 
+    <!-- Month -->
     {% ifchanged date|date:'F' %}
         <h3 class="text-center">{{ date|date:'F' }}</h3>
     {% endifchanged %}
 
     {% if day.sancto and day.sancto.force > day.tempo.force %}
+        <!-- SANCTO -->
         <p class="header font-weight-bold mb-0">
-            {{ date|date:'j' }} - 
+            <!-- Day -->
+            {{ date|date:'D' }} {{ date|date:'j' }} - 
+            <!-- Header -->
             {{ day.sancto.header|default_if_none:'' }}
         <p class="body">
+            <!-- Body -->
             {{ day.sancto.body|default_if_none:'' }}
         </p>
 
     {% else %}
+        <!-- TEMPO -->
         <p class="header font-weight-bold mb-0">
-            {{ date|date:'j' }} - 
+            <!-- Day -->
+            {{ date|date:'D' }} {{ date|date:'j' }} - 
+            <!-- Header -->
             {{ day.tempo.header|default_if_none:'' }}
         </p>
         <p class="body">
+            <!-- Body -->
             {{ day.tempo.body|default_if_none:'' }}
         </p>
     {% endif %}
