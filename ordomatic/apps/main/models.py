@@ -9,6 +9,9 @@ class Day(models.Model):
         null=True,
         max_length=255,
     )
+    header = models.TextField(
+        null=True,
+    )
     body = models.TextField(
         null=True,
     )
