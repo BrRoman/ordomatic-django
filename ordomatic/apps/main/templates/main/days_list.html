@@ -1,0 +1,20 @@
+<!-- List of days of page ordo. -->
+
+<table class="table table-sm table-bordered">
+    <tr>
+        <th class="text-center">Day</th>
+        <th class="text-center">Tempo</th>
+        <th class="text-center">Sancto</th>
+    </tr>
+
+    {% for date, day in days.items %}
+        <tr>
+            <td class="col-4 date">{{ date|date:'l F j Y' }}</td>
+            <td class="col-4 tempo">{{ day.tempo }} [{{ day.tempo.force }}]</div></td>
+            <td class="col-4 sancto">
+                {% if day.sancto %}
+                    {{ day.sancto }} [{{ day.sancto.force }}]
+                {% endif %}</td>
+        </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <label for="year" class="green font-weight-bold">Year:
+        <input type="number" id="year" class="input-sm mb-3" value={{ year }}>
+    </label>
+
+    <div class="d-flex w-100">
+        <div id="days_list" class="col-8"></div>
+        <div id="ordo_output" class="col-4 border border-secondary rounded p-3"></div>
+    </div>
+{% endblock content %}

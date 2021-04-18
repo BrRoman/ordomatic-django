@@ -1,3 +1,7 @@
-from django.contrib import admin
+""" apps/main/admin.py """
 
-# Register your models here.
+from django.contrib import admin
+from .models import DaySancto, DayTempo
+
+admin.site.register(DaySancto)
+admin.site.register(DayTempo)
