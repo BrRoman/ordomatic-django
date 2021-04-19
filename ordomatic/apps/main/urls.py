@@ -12,7 +12,7 @@ urlpatterns = [
         name='home',
     ),
     path(
-        'ordo/<int:year>',
+        'ordo/',
         views.ordo,
         name='ordo',
     ),

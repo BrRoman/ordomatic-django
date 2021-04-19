@@ -13,9 +13,7 @@ def home(request):
     return render(
         request,
         'main/home.html',
-        {
-            'current_year': date.today().year,
-        },
+        {},
     )
 
 
@@ -25,7 +23,7 @@ def ordo(request, **kwargs):
         request,
         'main/ordo.html',
         {
-            'year': kwargs['year'],
+            'year': date.today().year,
         }
     )
 
