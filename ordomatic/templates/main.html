@@ -19,18 +19,17 @@
 
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <div class="container mw-100 mx-0">
-                <div id="logo" class="col-3 mr-auto d-flex align-items-center">
-                    <a href={% url 'main:home' %}>
-                        <span id="title" class="my-0">Ordomatic</span>
-                    </a>
-                </div>
+            <div id="logo" class="col-3 mr-auto d-flex align-items-center">
+                <a href={% url 'main:home' %}>
+                    <span id="title" class="my-0">Ordomatic</span>
+                </a>
             </div>
+
+            {% block nav %}{% endblock nav %}
         </nav>
 
         <div id="content" class="d-flex flex-column align-items-center mx-5 my-3">
-            {% block content %}
-            {% endblock content %}
+            {% block content %}{% endblock content %}
         </div>
     </body>
 

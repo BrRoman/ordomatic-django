@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h1>Welcome to Ordomatic!</h1>
+    <h1 class="mt-5 mb-2">Welcome to Ordomatic!</h1>
 
-    <a href={% url 'main:ordo' current_year %}>Create an ordo</a>
+    <a href={% url 'main:ordo' %}>Create an ordo</a>
 {% endblock content %}

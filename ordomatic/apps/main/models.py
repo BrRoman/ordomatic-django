@@ -22,6 +22,9 @@ class Day(models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return self.header
+
 
 class DayTempo(Day):
     """ Day tempo model. """
@@ -34,14 +37,6 @@ class DayTempo(Day):
         ],
     )
     add = models.IntegerField()
-
-    def __str__(self):
-        return '{} ({} {}{})'.format(
-            self.name if self.name else '-',
-            self.baseline,
-            '+ ' if self.add >= 0 else ' ',
-            self.add,
-        )
 
 
 class DaySancto(Day):
@@ -65,6 +60,3 @@ class DaySancto(Day):
     day = models.IntegerField(
         choices=[(i + 1, i + 1) for i in range(31)],
     )
-
-    def __str__(self):
-        return self.name
