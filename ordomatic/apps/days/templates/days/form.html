@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href={% url 'days:home' %}>Days</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:days_list' class %}>{{ class|title }}</a></li>
+    {% if day %}
+        <li class="breadcrumb-item"><a href={% url 'days:day_details' class day.pk %}>{{ day }}</a></li>
+        <li class="breadcrumb-item active">Update</li>
+    {% else %}
+        <li class="breadcrumb-item active">Create</li>
+    {% endif %}
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <h3>Form for day ({{ class }}).</h3>
+
+    {% if day %}
+        Update {{ day }}
+    {% else %}
+        Create
+    {% endif %}
+{% endblock content %}

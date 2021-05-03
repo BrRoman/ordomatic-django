@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href={% url 'days:home' %}>Days</a></li>
+    <li class="breadcrumb-item active">Tempo</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <h1>{{ class|title }}</h1>
+    <a href={% url 'days:day_create' 'tempo' %}>Create a new day</a>
+
+    <table class="table table-sm table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Header</th>
+                <th class="text-center">Force</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for day in days %}
+                <tr>
+                    <td class="col-3">{{ day.name }}</td>
+                    <td class="col-3">{{ day.header }}</td>
+                    <td class="col-3">{{ day.force }}</td>
+                    <td class="col-1">
+                        <a href={% url 'days:day_details' 'tempo' day.pk %}>
+                            <span class="fas fa-eye" title="See details of this day"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+
+

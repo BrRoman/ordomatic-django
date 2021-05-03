@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active">Days</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <h1>Days</h1>
+
+    <a href={% url 'days:days_list' 'tempo' %}>Tempo</a>
+    <a href={% url 'days:days_list' 'sancto' %}>Sancto</a>
+{% endblock content %}
+
+

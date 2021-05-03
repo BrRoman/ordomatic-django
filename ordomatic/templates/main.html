@@ -28,6 +28,14 @@
             {% block nav %}{% endblock nav %}
         </nav>
 
+        <div id="breadcrumbs">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href={% url 'main:home' %}><span class="fas fa-home"></span></a></li>
+                {% block breadcrumbs %}
+                {% endblock breadcrumbs %}
+            </ol>
+        </div>
+
         <div id="content" class="d-flex flex-column align-items-center mx-5 my-3">
             {% block content %}{% endblock content %}
         </div>
