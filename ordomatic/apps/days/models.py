@@ -23,7 +23,7 @@ class Day(models.Model):
         abstract = True
 
     def __str__(self):
-        return self.header
+        return self.name
 
 
 class DayTempo(Day):
