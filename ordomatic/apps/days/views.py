@@ -59,9 +59,11 @@ def home(request):
 
 def days_list(request, **kwargs):
     """ List of days. """
+    category = kwargs['category']
     tempo = DayTempo.objects.all().order_by('baseline', 'add')
     sancto = DaySancto.objects.all().order_by('month', 'day')
-    if kwargs['category'] == 'tempo':
+
+    if category == 'tempo':
         url = 'days/list_tempo.html'
         days = tempo
     else:
@@ -72,7 +74,7 @@ def days_list(request, **kwargs):
         request,
         url,
         {
-            'category': kwargs['category'],
+            'category': category,
             'days': days,
         },
     )
