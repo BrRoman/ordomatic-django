@@ -2,14 +2,14 @@
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a href={% url 'days:home' %}>Days</a></li>
-    <li class="breadcrumb-item"><a href={% url 'days:days_list' class %}>{{ class|title }}</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:days_list' category %}>{{ category|title }}</a></li>
     <li class="breadcrumb-item active">{{ day }}</li>
 {% endblock breadcrumbs %}
 
 {% block content %}
-    Details of day {{ day }} (class = {{ class }})
+    Details of day {{ day }} (category = {{ category }})
 
-    <a href={% url 'days:day_update' class day.pk%}>Edit this day</a>
-    <a href={% url 'days:day_delete' class day.pk%}>Delete this day</a>
-    <a href={% url 'days:days_list' class %}>Back to list</a>
+    <a href={% url 'days:day_update' category day.pk%}>Edit this day</a>
+    <a href={% url 'days:day_delete' category day.pk%}>Delete this day</a>
+    <a href={% url 'days:days_list' category %}>Back to list</a>
 {% endblock content %}

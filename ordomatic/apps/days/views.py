@@ -61,7 +61,7 @@ def days_list(request, **kwargs):
     """ List of days. """
     tempo = DayTempo.objects.all().order_by('baseline', 'add')
     sancto = DaySancto.objects.all().order_by('month', 'day')
-    if kwargs['class'] == 'tempo':
+    if kwargs['category'] == 'tempo':
         url = 'days/list_tempo.html'
         days = tempo
     else:
@@ -72,7 +72,7 @@ def days_list(request, **kwargs):
         request,
         url,
         {
-            'class': kwargs['class'],
+            'category': kwargs['category'],
             'days': days,
         },
     )
@@ -80,7 +80,7 @@ def days_list(request, **kwargs):
 
 def day_create(request, **kwargs):
     """ Create a day. """
-    category = kwargs['class']
+    category = kwargs['category']
     if request.method == 'POST':
         form = DayTempoForm(request.POST) \
             if category == 'tempo' else DaySanctoForm(request.POST)
@@ -90,7 +90,7 @@ def day_create(request, **kwargs):
                 reverse(
                     'days:days_list',
                     args={
-                        'class': category,
+                        'category': category,
                     }
                 )
             )
@@ -103,14 +103,14 @@ def day_create(request, **kwargs):
         'days/form.html',
         {
             'form': form,
-            'class': category,
+            'category': category,
         }
     )
 
 
 def day_details(request, **kwargs):
     """ Details of day. """
-    if kwargs['class'] == 'tempo':
+    if kwargs['category'] == 'tempo':
         day = DayTempo.objects.get(pk=kwargs['pk'])
     else:
         day = DaySancto.objects.get(pk=kwargs['pk'])
@@ -120,14 +120,14 @@ def day_details(request, **kwargs):
         'days/details.html',
         {
             'day': day,
-            'class': kwargs['class'],
+            'category': kwargs['category'],
         },
     )
 
 
 def day_update(request, **kwargs):
     """ Update a day. """
-    if kwargs['class'] == 'tempo':
+    if kwargs['category'] == 'tempo':
         day = DayTempo.objects.get(pk=kwargs['pk'])
     else:
         day = DaySancto.objects.get(pk=kwargs['pk'])
@@ -137,14 +137,14 @@ def day_update(request, **kwargs):
         'days/form.html',
         {
             'day': day,
-            'class': kwargs['class'],
+            'category': kwargs['category'],
         },
     )
 
 
 def day_delete(request, **kwargs):
     """ Delete a day. """
-    if kwargs['class'] == 'tempo':
+    if kwargs['category'] == 'tempo':
         day = DayTempo.objects.get(pk=kwargs['pk'])
     else:
         day = DaySancto.objects.get(pk=kwargs['pk'])
@@ -154,6 +154,6 @@ def day_delete(request, **kwargs):
         'days/delete.html',
         {
             'day': day,
-            'class': kwargs['class'],
+            'category': kwargs['category'],
         }
     )

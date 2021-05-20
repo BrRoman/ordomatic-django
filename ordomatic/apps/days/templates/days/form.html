@@ -4,9 +4,9 @@
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item"><a href={% url 'days:home' %}>Days</a></li>
-    <li class="breadcrumb-item"><a href={% url 'days:days_list' class %}>{{ class|title }}</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:days_list' category %}>{{ category|title }}</a></li>
     {% if day %}
-        <li class="breadcrumb-item"><a href={% url 'days:day_details' class day.pk %}>{{ day }}</a></li>
+        <li class="breadcrumb-item"><a href={% url 'days:day_details' category day.pk %}>{{ day }}</a></li>
         <li class="breadcrumb-item active">Update</li>
     {% else %}
         <li class="breadcrumb-item active">Create</li>
