@@ -163,16 +163,27 @@ def day_update(request, **kwargs):
 
 def day_delete(request, **kwargs):
     """ Delete a day. """
-    if kwargs['category'] == 'tempo':
-        day = DayTempo.objects.get(pk=kwargs['pk'])
-    else:
-        day = DaySancto.objects.get(pk=kwargs['pk'])
+    category = kwargs['category']
+    day = DayTempo.objects.get(pk=kwargs['pk']) \
+        if category == 'tempo' else DaySancto.objects.get(pk=kwargs['pk'])
 
-    return render(
-        request,
-        'days/delete.html',
-        {
-            'day': day,
-            'category': kwargs['category'],
-        }
-    )
+    if request.method == 'POST':
+        day.delete()
+        return HttpResponseRedirect(
+            reverse(
+                'days:days_list',
+                kwargs={
+                    'category': category,
+                },
+            ),
+        )
+
+    else:
+        return render(
+            request,
+            'days/delete.html',
+            {
+                'category': category,
+                'day': day,
+            },
+        )

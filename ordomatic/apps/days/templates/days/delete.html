@@ -8,6 +8,15 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-    Are you sure you want to delete this day?
-    ({{ day }})
+    <form method="post">
+        {% csrf_token %}
+
+        <h3 class="red text-weight-bold">Are you sure you want to delete this day?</h3>
+        <h4 class="text-center mb-5">({{ day }})</h4>
+
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-danger mx-3">Yes</button>
+            <a href={% url 'days:day_details' category day.pk %} class="btn btn-primary mx-3">No</a>
+        </div>
+    </form>
 {% endblock content %}
