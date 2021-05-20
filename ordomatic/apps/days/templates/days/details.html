@@ -7,7 +7,34 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-    Details of day {{ day }} (category = {{ category }})
+    <h3>Details of day {{ day.name }}</h3>
+
+    {% if category == 'tempo' %}
+        ({{ day.baseline }}{% if day.add >= 0 %}+{% endif %}{{ day.add }})
+    {% else %}
+        ({{ day }})
+    {% endif %}
+
+    <div class="col-6 mt-3">
+        <table class="table table-sm table-borderless">
+            <tr>
+                <td class="col-2 font-weight-bold">Name:</td>
+                <td class="col-10">{{ day.name }}</td>
+            </tr>
+            <tr>
+                <td class="col-2 font-weight-bold">Header:</td>
+                <td class="col-10">{{ day.header }}</td>
+            </tr>
+            <tr>
+                <td class="col-2 font-weight-bold">Body:</td>
+                <td class="col-10">{{ day.body }}</td>
+            </tr>
+            <tr>
+                <td class="col-2 font-weight-bold">Force:</td>
+                <td class="col-10">{{ day.force }}</td>
+            </tr>
+        </table>
+    </div>
 
     <a href={% url 'days:day_update' category day.pk%}>Edit this day</a>
     <a href={% url 'days:day_delete' category day.pk%}>Delete this day</a>
