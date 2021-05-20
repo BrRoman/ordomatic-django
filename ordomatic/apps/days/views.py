@@ -81,6 +81,7 @@ def days_list(request, **kwargs):
 def day_create(request, **kwargs):
     """ Create a day. """
     category = kwargs['category']
+
     if request.method == 'POST':
         form = DayTempoForm(request.POST) \
             if category == 'tempo' else DaySanctoForm(request.POST)
@@ -110,7 +111,9 @@ def day_create(request, **kwargs):
 
 def day_details(request, **kwargs):
     """ Details of day. """
-    if kwargs['category'] == 'tempo':
+    category = kwargs['category']
+
+    if category == 'tempo':
         day = DayTempo.objects.get(pk=kwargs['pk'])
     else:
         day = DaySancto.objects.get(pk=kwargs['pk'])
@@ -120,7 +123,7 @@ def day_details(request, **kwargs):
         'days/details.html',
         {
             'day': day,
-            'category': kwargs['category'],
+            'category': category,
         },
     )
 
