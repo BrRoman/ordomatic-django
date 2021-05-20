@@ -15,9 +15,9 @@
 
 {% block content %}
     {% if day %}
-        <h3>Update {{ day }}</h3>
+        <h3>Update {{ day }} ({{ category }})</h3>
     {% else %}
-        <h3>Create a new day</h3>
+        <h3>Create a new day ({{ category }})</h3>
     {% endif %}
 
     <form class="d-flex flex-column align-items-center w-100 mb-3" method="post" novalidate>
