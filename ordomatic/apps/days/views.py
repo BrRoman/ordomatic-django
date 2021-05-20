@@ -92,7 +92,7 @@ def day_create(request, **kwargs):
             return HttpResponseRedirect(
                 reverse(
                     'days:days_list',
-                    args={
+                    kwargs={
                         'category': category,
                     }
                 )
