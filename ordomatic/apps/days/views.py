@@ -127,15 +127,34 @@ def day_details(request, **kwargs):
 
 def day_update(request, **kwargs):
     """ Update a day. """
-    if kwargs['category'] == 'tempo':
-        day = DayTempo.objects.get(pk=kwargs['pk'])
+    category = kwargs['category']
+    day = DayTempo.objects.get(pk=kwargs['pk']) \
+        if category == 'tempo' else DaySancto.objects.get(pk=kwargs['pk'])
+
+    if request.method == 'POST':
+        form = DayTempoForm(request.POST, instance=day) \
+            if category == 'tempo' else DaySanctoForm(request.POST, instance=day)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(
+                reverse(
+                    'days:day_details',
+                    kwargs={
+                        'category': category,
+                        'pk': day.pk,
+                    },
+                )
+            )
+
     else:
-        day = DaySancto.objects.get(pk=kwargs['pk'])
+        form = DayTempoForm(instance=day) \
+            if category == 'tempo' else DaySanctoForm(instance=day)
 
     return render(
         request,
         'days/form.html',
         {
+            'form': form,
             'day': day,
             'category': kwargs['category'],
         },
