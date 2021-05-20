@@ -38,3 +38,22 @@ class DaySancto(Day):
     """ Day sancto model. """
     month = models.IntegerField()
     day = models.IntegerField()
+
+    def __str__(self):
+        return '{} {}'.format(
+            [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December',
+            ][self.day - 1],
+            self.day
+        )
