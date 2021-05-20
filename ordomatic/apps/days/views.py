@@ -2,9 +2,12 @@
 
 from datetime import date, timedelta
 
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 
 from .dates import calculate_easter
+from .forms import DayTempoForm, DaySanctoForm
 from .models import DaySancto, DayTempo
 
 
@@ -77,12 +80,31 @@ def days_list(request, **kwargs):
 
 def day_create(request, **kwargs):
     """ Create a day. """
+    category = kwargs['class']
+    if request.method == 'POST':
+        form = DayTempoForm(request.POST) \
+            if category == 'tempo' else DaySanctoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(
+                reverse(
+                    'days:days_list',
+                    args={
+                        'class': category,
+                    }
+                )
+            )
+
+    else:
+        form = DayTempoForm() if category == 'tempo' else DaySanctoForm()
+
     return render(
         request,
         'days/form.html',
         {
-            'class': kwargs['class'],
-        },
+            'form': form,
+            'class': category,
+        }
     )
 
 
