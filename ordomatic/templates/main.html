@@ -25,7 +25,21 @@
                 </a>
             </div>
 
-            {% block nav %}{% endblock nav %}
+            <div class="ml-auto">
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <a class="ml-3" href={% url 'admin:index' %}><span class="fas fa-tools orange" title="Admin"></span></a>
+                    {% endif %}
+
+                    <a class="ml-3" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">
+                        <span class="fas fa-sign-out-alt orange" title="Logout"></span>
+                    </a>
+                {% else %}
+                    <a class="ml-3" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">
+                        <span class="fas fa-sign-in-alt fa-flip-horizontal orange" title="Login"></span>
+                    </a>
+                {% endif %}
+            </div>
         </nav>
 
         <div id="breadcrumbs">
