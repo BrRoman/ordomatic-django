@@ -25,8 +25,30 @@
                 </a>
             </div>
 
-            {% block nav %}{% endblock nav %}
+            <div class="ml-auto">
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <a class="ml-3" href={% url 'admin:index' %}><span class="fas fa-tools orange" title="Admin"></span></a>
+                    {% endif %}
+
+                    <a class="ml-3" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">
+                        <span class="fas fa-sign-out-alt orange" title="Logout"></span>
+                    </a>
+                {% else %}
+                    <a class="ml-3" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">
+                        <span class="fas fa-sign-in-alt fa-flip-horizontal orange" title="Login"></span>
+                    </a>
+                {% endif %}
+            </div>
         </nav>
+
+        <div id="breadcrumbs">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href={% url 'main:home' %}><span class="fas fa-home"></span></a></li>
+                {% block breadcrumbs %}
+                {% endblock breadcrumbs %}
+            </ol>
+        </div>
 
         <div id="content" class="d-flex flex-column align-items-center mx-5 my-3">
             {% block content %}{% endblock content %}

@@ -1,0 +1,99 @@
+{% extends 'main.html' %}
+
+{% load widget_tweaks %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active">Signup</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <h2>Create your account!</h2>
+
+    <form class="d-flex flex-column align-items-center w-100 mb-3" method="post" novalidate>
+        <div class="col-6">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="form-group">
+                {{ form.username.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.username.errors %}
+                        {% render_field form.username class="form-control is-invalid" %}
+                        {% for error in form.username.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.username class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.username class="form-control" %}
+                {% endif %}
+
+                {% if form.username.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.username.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Password 1 -->
+            <div class="form-group">
+                {{ form.password1.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.password1.errors %}
+                        {% render_field form.password1 class="form-control is-invalid" %}
+                        {% for error in form.password1.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.password1 class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.password1 class="form-control" %}
+                {% endif %}
+
+                {% if form.password1.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.password1.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Password 2 -->
+            <div class="form-group">
+                {{ form.password2.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.password2.errors %}
+                        {% render_field form.password2 class="form-control is-invalid" %}
+                        {% for error in form.password2.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.password2 class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.password2 class="form-control" %}
+                {% endif %}
+
+                {% if form.password2.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.password2.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Validate</button>
+        </div>
+    </form>
+{% endblock content %}

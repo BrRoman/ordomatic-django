@@ -1,0 +1,240 @@
+{% extends 'main.html' %}
+
+{% load widget_tweaks %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href={% url 'days:home' %}>Days</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:days_list' category %}>{{ category|title }}</a></li>
+    {% if day %}
+        <li class="breadcrumb-item"><a href={% url 'days:day_details' category day.pk %}>{{ day }}</a></li>
+        <li class="breadcrumb-item active">Update</li>
+    {% else %}
+        <li class="breadcrumb-item active">Create</li>
+    {% endif %}
+{% endblock breadcrumbs %}
+
+{% block content %}
+    {% if day %}
+        <h3>Update {{ day }} ({{ category }})</h3>
+    {% else %}
+        <h3>Create a new day ({{ category }})</h3>
+    {% endif %}
+
+    <form class="d-flex flex-column align-items-center w-100 mb-3" method="post" novalidate>
+        <div class="col-6">
+            {% csrf_token %}
+
+            <!-- Name -->
+            <div class="form-group">
+                {{ form.name.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.name.errors %}
+                        {% render_field form.name class="form-control is-invalid" %}
+                        {% for error in form.name.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.name class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.name class="form-control" %}
+                {% endif %}
+
+                {% if form.name.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.name.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Baseline (tempo only) -->
+            <div class="form-group">
+                {{ form.baseline.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.baseline.errors %}
+                        {% render_field form.baseline class="form-control is-invalid" %}
+                        {% for error in form.baseline.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.baseline class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.baseline class="form-control" %}
+                {% endif %}
+
+                {% if form.baseline.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.baseline.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Add (tempo only) -->
+            <div class="form-group">
+                {{ form.add.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.add.errors %}
+                        {% render_field form.add class="form-control is-invalid" %}
+                        {% for error in form.add.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.add class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.add class="form-control" %}
+                {% endif %}
+
+                {% if form.add.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.add.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Month (sancto only) -->
+            <div class="form-group">
+                {{ form.month.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.month.errors %}
+                        {% render_field form.month class="form-control is-invalid" %}
+                        {% for error in form.month.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.month class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.month class="form-control" %}
+                {% endif %}
+
+                {% if form.month.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.month.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Day (sancto only) -->
+            <div class="form-group">
+                {{ form.day.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.day.errors %}
+                        {% render_field form.day class="form-control is-invalid" %}
+                        {% for error in form.day.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.day class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.day class="form-control" %}
+                {% endif %}
+
+                {% if form.day.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.day.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Header -->
+            <div class="form-group">
+                {{ form.header.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.header.errors %}
+                        {% render_field form.header class="form-control is-invalid" %}
+                        {% for error in form.header.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.header class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.header class="form-control" %}
+                {% endif %}
+
+                {% if form.header.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.header.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Body -->
+            <div class="form-group">
+                {{ form.body.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.body.errors %}
+                        {% render_field form.body class="form-control is-invalid" %}
+                        {% for error in form.body.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.body class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.body class="form-control" %}
+                {% endif %}
+
+                {% if form.body.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.body.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Force -->
+            <div class="form-group">
+                {{ form.force.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.force.errors %}
+                        {% render_field form.force class="form-control is-invalid" %}
+                        {% for error in form.force.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.force class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.force class="form-control" %}
+                {% endif %}
+
+                {% if form.force.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.force.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Validate</button>
+        </div>
+    </form>
+{% endblock content %}
