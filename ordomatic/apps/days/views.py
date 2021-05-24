@@ -112,7 +112,7 @@ def day_create(request, **kwargs):
 
 
 def day_details(request, **kwargs):
-    """ Details of day. """
+    """ Details of a day. """
     category = kwargs['category']
 
     if category == 'tempo':
