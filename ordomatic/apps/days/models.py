@@ -1,4 +1,4 @@
-""" apps/main/models.py """
+""" apps/days/models.py """
 
 from django.db import models
 
