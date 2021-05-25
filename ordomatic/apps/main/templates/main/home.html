@@ -5,4 +5,19 @@
 
     <a href={% url 'main:ordo' %}>Create an ordo</a>
     <a href={% url 'days:home' %}>Manage the days of your ordo.</a>
+
+    <div class="mt-5 d-flex flex-column text-center">
+        {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <small class="fs-6">You are logged in as <span class="font-weight-bold">{{ user }}</span> (superuser).</small>
+                <small class="fs-6"><a href={% url 'accounts:logout' %}>Logout</a></small>
+            {% else %}
+                <small class="fs-6">You are logged in as <span class="font-weight-bold">{{ user }}</span>.</small>
+                <small class="fs-6"><a href={% url 'accounts:logout' %}>Logout</a></small>
+            {% endif %}
+        {% else %}
+            <small class="fs-6">You are not logged.</small>
+                <small class="fs-6"><a href={% url 'accounts:login' %}>Login</a></small>
+        {% endif %}
+    </div>
 {% endblock content %}
