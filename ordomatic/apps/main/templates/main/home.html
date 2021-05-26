@@ -8,15 +8,10 @@
 
     <div class="mt-5 d-flex flex-column text-center">
         {% if user.is_authenticated %}
-            {% if user.is_superuser %}
-                <small class="fs-6">You are logged in as <span class="font-weight-bold">{{ user }}</span> (superuser).</small>
-                <small class="fs-6"><a href={% url 'accounts:logout' %}>Logout</a></small>
-            {% else %}
-                <small class="fs-6">You are logged in as <span class="font-weight-bold">{{ user }}</span>.</small>
-                <small class="fs-6"><a href={% url 'accounts:logout' %}>Logout</a></small>
-            {% endif %}
+            <small class="fs-6">You are logged in as <span class="font-weight-bold">{{ user }}</span>{% if user.is_superuser %} (superuser){% endif %}.</small>
+            <small class="fs-6"><a href={% url 'accounts:logout' %}>Logout</a></small>
         {% else %}
-            <small class="fs-6">You are not logged.</small>
+            <small class="fs-6">You are not logged in.</small>
                 <small class="fs-6"><a href={% url 'accounts:login' %}>Login</a></small>
         {% endif %}
     </div>
