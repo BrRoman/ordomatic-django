@@ -21,37 +21,45 @@
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div id="logo" class="col-3 mr-auto d-flex align-items-center">
                 <a href={% url 'main:home' %}>
-                    <span id="title" class="my-0">Ordomatic</span>
+                    <span id="title" class="orange my-0">Ordomatic</span>
                 </a>
-            </div>
-
-            <div class="ml-auto">
-                {% if user.is_authenticated %}
-                    {% if user.is_superuser %}
-                        <a class="ml-3" href={% url 'admin:index' %}><span class="fas fa-tools orange" title="Admin"></span></a>
-                    {% endif %}
-
-                    <a class="ml-3" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">
-                        <span class="fas fa-sign-out-alt orange" title="Logout"></span>
-                    </a>
-                {% else %}
-                    <a class="ml-3" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">
-                        <span class="fas fa-sign-in-alt fa-flip-horizontal orange" title="Login"></span>
-                    </a>
-                {% endif %}
             </div>
         </nav>
 
-        <div id="breadcrumbs">
-            <ol class="breadcrumb">
+        <div class="d-flex">
+            <div class="dropdown ml-3">
+                <div class="dropdown">
+                    <button class="dropdown-button fas fa-bars"></button>
+                    <div class="dropdown-content p-2">
+                        {% if user.is_authenticated %}
+                            <a href={% url 'accounts:details' %} class="user font-weight-bold mb-2">
+                                <span class="fas fa-user grey mr-2"></span>{{ user }}
+                            </a>
+                            <a href="">My ordos</a>
+                        {% endif %}
+
+                        <a href={% url 'main:ordo' %}>Write an ordo</a>
+
+                        {% if user.is_authenticated %}
+                            <a href={% url 'accounts:logout' %}>Logout</a>
+                        {% else %}
+                            <a href={% url 'accounts:login' %}>Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <ol class="breadcrumb w-100">
                 <li class="breadcrumb-item"><a href={% url 'main:home' %}><span class="fas fa-home"></span></a></li>
                 {% block breadcrumbs %}
                 {% endblock breadcrumbs %}
             </ol>
         </div>
 
-        <div id="content" class="d-flex flex-column align-items-center mx-5 my-3">
-            {% block content %}{% endblock content %}
+        <div id="content" class="d-flex">
+            <div class="w-100 d-flex flex-column align-items-center mx-5 my-3">
+                {% block content %}{% endblock content %}
+            </div>
         </div>
     </body>
 
