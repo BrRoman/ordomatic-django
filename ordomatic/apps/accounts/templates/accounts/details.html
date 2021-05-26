@@ -6,4 +6,7 @@
 
 {% block content %}
     <h2>Details view</h2>
+    <a href={% url 'accounts:update' %}>Modify your account</a>
+    <a href={% url 'accounts:change_password' %}>Change your password</a>
+    <a href={% url 'accounts:reset_password' %}>Reset your password</a>
 {% endblock content %}
