@@ -12,7 +12,7 @@
             <small class="fs-6"><a href={% url 'accounts:logout' %}>Logout</a></small>
         {% else %}
             <small class="fs-6">You are not logged in.</small>
-                <small class="fs-6"><a href={% url 'accounts:login' %}>Login</a></small>
+                <small class="fs-6"><a href={% url 'accounts:login' %}>Login</a> or <a href={% url 'accounts:signup' %}>create an account</a></small>
         {% endif %}
     </div>
 {% endblock content %}
