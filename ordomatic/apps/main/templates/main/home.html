@@ -1,13 +1,17 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h1 class="mt-5 mb-2">Welcome to Ordomatic!</h1>
-
-    <a href={% url 'main:ordo' %}>Create an ordo</a>
+    {% if user.is_authenticated %}
+        <h4>{{ user }}</h4>
+    {% endif %}
     
+    <h1 class="my-3">Welcome to Ordomatic!</h1>
+
     {% if user.is_authenticated %}
         <a href={% url 'calendars:calendars_list' %}>Manage your calendars</a>
     {% endif %}
+
+    <a href={% url 'main:ordo' %}>Create an ordo</a>
 
     <div class="mt-5 d-flex flex-column text-center">
         {% if user.is_authenticated %}

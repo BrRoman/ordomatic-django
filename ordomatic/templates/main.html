@@ -24,6 +24,8 @@
                     <span id="title" class="orange my-0">Ordomatic</span>
                 </a>
             </div>
+
+            {% block nav %}{% endblock nav %}
         </nav>
 
         <ol class="breadcrumb w-100">
@@ -35,10 +37,10 @@
                             <a href={% url 'accounts:details' %} class="user font-weight-bold mb-2">
                                 <span class="fas fa-user grey mr-2"></span>{{ user }}
                             </a>
-                            <a href={% url 'calendars:calendars_list' %}>My ordos</a>
+                            <a href={% url 'calendars:calendars_list' %}>Manage your calendars</a>
                         {% endif %}
 
-                        <a href={% url 'main:ordo' %}>Write an ordo</a>
+                        <a href={% url 'main:ordo' %}>Create an ordo</a>
 
                         {% if user.is_authenticated %}
                             <a href={% url 'accounts:logout' %}>Logout</a>
@@ -65,8 +67,6 @@
     <script src="{% static 'js/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
     <script src="{% static 'css/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/less.min.js' %}"></script>
-    <script src="{% static "js/moment.min.js" %}"></script>
-    <script src="{% static "js/tempusdominus-bootstrap-4.min.js" %}"></script>
     <script src="{% static 'js/ordomatic.js' %}"></script>
     {% block javascript %}{% endblock javascript %}
 </html>

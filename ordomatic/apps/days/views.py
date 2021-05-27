@@ -13,13 +13,14 @@ from .models import DaySancto, DayTempo
 from apps.calendars.models import Calendar
 
 
-@login_required
-def fetch_days(year):
+def fetch_days(calendar, year):
     """ Returns a list of the days of the given year. """
+    calendar = Calendar.objects.get(pk=calendar)
     days = {}  # {'date': {'tempo': object, 'sancto': object}, …}.
 
     # Christmas time:
-    christmas_days = DayTempo.objects.filter(baseline='start').order_by('add')
+    christmas_days = DayTempo.objects.filter(
+        calendar=calendar).filter(baseline='start').order_by('add')
     christmas = date(year - 1, 12, 25)
     christmas_weekday = christmas.weekday()
     start = christmas - timedelta(days=22 + christmas_weekday)
@@ -35,13 +36,15 @@ def fetch_days(year):
             days[key]['sancto'] = sancto[0]
 
     # Easter time:
-    easter_days = DayTempo.objects.filter(baseline='easter').order_by('add')
+    easter_days = DayTempo.objects.filter(
+        calendar=calendar).filter(baseline='easter').order_by('add')
     easter = calculate_easter(year)
     for index, easter_day in enumerate(easter_days):
         key = easter + timedelta(days=easter_day.add)
         days[key] = {}
         days[key]['tempo'] = easter_day
         sancto = DaySancto.objects.filter(
+            calendar=calendar).filter(
             month=key.month,
             day=key.day,
         )
