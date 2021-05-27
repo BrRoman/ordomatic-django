@@ -4,7 +4,10 @@
     <h1 class="mt-5 mb-2">Welcome to Ordomatic!</h1>
 
     <a href={% url 'main:ordo' %}>Create an ordo</a>
-    <a href={% url 'calendars:calendars_list' %}>Manage your calendars</a>
+    
+    {% if user.is_authenticated %}
+        <a href={% url 'calendars:calendars_list' %}>Manage your calendars</a>
+    {% endif %}
 
     <div class="mt-5 d-flex flex-column text-center">
         {% if user.is_authenticated %}
