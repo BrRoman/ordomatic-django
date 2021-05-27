@@ -1,5 +1,16 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h3>Delete an ordo</h3>
+    <form method="post">
+        {% csrf_token %}
+
+        <h3 class="bg-danger text-white red">Are you sure you want to delete this ordo?</h3>
+        <h4>({{ ordo }})</h4>
+
+        <!-- Validation -->
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-danger mx-3">Yes</button>
+            <a href={% url 'ordos:ordo_details' ordo.id %} class="btn btn-primary mx-3">No</a>
+        </div>
+    </form>
 {% endblock content %}

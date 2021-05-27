@@ -1,5 +1,17 @@
 {% extends 'main.html' %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active">Ordos</li>
+{% endblock breadcrumbs %}
+
 {% block content %}
     <h3>List of ordos</h3>
+
+    <a href={% url 'ordos:ordo_create' %}>Create a new ordo</a>
+
+    <ul>
+        {% for ordo in ordos %}
+            <li><a href={% url 'ordos:ordo_details' ordo.pk %}>{{ ordo }}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock content %}

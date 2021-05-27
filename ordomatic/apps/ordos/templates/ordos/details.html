@@ -1,5 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h3>Details of an ordo</h3>
+    <h3>Details of ordo <i>{{ ordo }}</i></h3>
+    <a href={% url 'ordos:ordo_update' ordo.pk %}>Update this ordo</a>
+    <a href={% url 'ordos:ordo_delete' ordo.pk %}>Delete this ordo</a>
 {% endblock content %}
