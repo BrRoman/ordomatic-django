@@ -1,10 +1,17 @@
-""" apps/main/models.py """
+""" apps/days/models.py """
 
 from django.db import models
+
+from apps.calendars.models import Calendar
 
 
 class Day(models.Model):
     """ Abstract day model. """
+    calendar = models.ForeignKey(
+        Calendar,
+        on_delete=models.CASCADE,
+        blank=True,
+    )
     name = models.CharField(
         null=True,
         max_length=255,
@@ -22,9 +29,6 @@ class Day(models.Model):
     class Meta:
         abstract = True
 
-    def __str__(self):
-        return self.name
-
 
 class DayTempo(Day):
     """ Day tempo model. """
@@ -33,6 +37,9 @@ class DayTempo(Day):
     )
     add = models.IntegerField()
 
+    def __str__(self):
+        return '{} (of calendar {})'.format(self.name, self.calendar)
+
 
 class DaySancto(Day):
     """ Day sancto model. """
@@ -40,7 +47,7 @@ class DaySancto(Day):
     day = models.IntegerField()
 
     def __str__(self):
-        return '{} {}'.format(
+        return '{} {} (of calendar {})'.format(
             [
                 'January',
                 'February',
@@ -55,5 +62,6 @@ class DaySancto(Day):
                 'November',
                 'December',
             ][self.day - 1],
-            self.day
+            self.day,
+            self.calendar
         )

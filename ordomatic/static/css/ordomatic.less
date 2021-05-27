@@ -1,7 +1,10 @@
 @blue: rgb(0, 0, 128);
 @red: rgb(255, 0, 0);
 @green: rgb(0, 100, 0);
-@light-green: rgb(0, 255, 0);
+@grey: rgb(145, 145, 145);
+@grey-light: rgb(220, 220, 220);
+@grey-dark: rgb(50, 50, 50);
+@green-light: rgb(0, 255, 0);
 @orange: rgb(255, 145, 0);
 
 
@@ -11,6 +14,10 @@ a:hover {
 
 .blue {
     color: @blue;
+}
+
+.grey {
+    color: @grey;
 }
 
 .green {
@@ -42,22 +49,68 @@ body {
                 font-family: LucidaHW;
                 font-size: 2.2em;
             }
+        }
+    }
 
-            #logo {
-                color: @light-green;
-                font-size: 1.5em;
+    // Menu:
+    .dropdown {
+        .dropdown {
+            .dropdown-button {
+                background-color: orange;
+                border: 1px solid @grey-light;
+                border-radius: 4px;
+                color: white;
+                cursor: pointer;
+                font-size: 10px;
+                padding: 5px;
+            }
+
+            .dropdown-content {
+                background-color: whitesmoke;
+                border: 1px solid @grey-light;
+                border-radius: 4px;
+                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                display: none;
+                font-size: 0.95em;
+                min-width: 200px;
+                position: absolute;
+                z-index: 9;
+
+                a {
+                    color: @grey-dark;
+                    display: block;
+                    padding: 4px 6px;
+                    text-decoration: none;
+                }
+
+                .user {
+                    background-color: @grey-light;
+                    font-size: 0.8em;
+                }
             }
         }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    }
+
+    // Breadcrumbs:
+    .breadcrumb {
+        height: 30px;
+        padding: 3px 3px 3px 20px;
     }
 
     // Content:
     #content {
+        margin: 0px;
+
         h1 {
             color: @green;
             font-family: LucidaHW;
         }
 
-        #ordo_block {
+        #ordo-block {
             overflow-y: scroll;
             height: 75vh;
         }

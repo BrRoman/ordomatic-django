@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Calendars</a></li>
+    <li class="breadcrumb-item active">{{ calendar }}</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <h3>Details of calendar <i>{{ calendar }}</i></h3>
+    <a href={% url 'calendars:calendar_update' calendar.pk %}>Update this calendar</a>
+    <a href={% url 'calendars:calendar_delete' calendar.pk %}>Delete this calendar</a>
+    <a href={% url 'days:home' calendar.pk %}>Manage the days of this calendar</a>
+{% endblock content %}

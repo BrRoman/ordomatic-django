@@ -1,0 +1,62 @@
+{% extends 'main.html' %}
+
+{% load widget_tweaks %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Calendars</a></li>
+
+    {% if calendar %}
+        <li class="breadcrumb-item"><a href={% url 'calendars:calendar_details' calendar.id %}>{{ calendar }}</a></li>
+        <li class="breadcrumb-item active">Update</li>
+    {% else %}
+        <li class="breadcrumb-item active">Create</li>
+    {% endif %}
+{% endblock breadcrumbs %}
+
+{% block content %}
+    {% if calendar %}
+        <h2 class="mb-4 green font-weight-bold">Update a calendar</h2>
+    {% else %}
+        <h2 class="mb-4 green font-weight-bold">Create a calendar</h2>
+    {% endif %}
+
+    <form class="d-flex flex-column align-items-center w-100 mb-3" method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Name -->
+        <div class="form-group">
+            {{ form.name.label_tag }}
+
+            {% if form.is_bound %}
+                {% if form.name.errors %}
+                    {% render_field form.name class="form-control is-invalid" %}
+                    {% for error in form.name.errors %}
+                        <div class="invalid-feedback" style="display: block;">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% render_field form.name class="form-control is-valid" %}
+                {% endif %}
+            {% else %}
+                {% render_field form.name class="form-control" %}
+            {% endif %}
+
+            {% if form.name.help_text %}
+                <small class="form-text text-muted">
+                    {{ form.name.help_text }}
+                </small>
+            {% endif %}
+        </div>
+
+        <!-- Validation -->
+        <div class="d-flex justify-content-center">
+            {% if calendar %}
+                <a href={% url 'calendars:calendar_details' calendar.id %} class="btn btn-primary mx-3">Annuler</a>
+            {% else %}
+                <a href={% url 'calendars:calendars_list' %} class="btn btn-primary mx-3">Annuler</a>
+            {% endif %}
+            <button type="submit" class="btn btn-success mx-3">Valider</button>
+        </div>
+    </form>
+{% endblock content %}
