@@ -1,0 +1,7 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h3>Details of calendar <i>{{ calendar }}</i></h3>
+    <a href={% url 'calendars:calendar_update' calendar.pk %}>Update this calendar</a>
+    <a href={% url 'calendars:calendar_delete' calendar.pk %}>Delete this calendar</a>
+{% endblock content %}

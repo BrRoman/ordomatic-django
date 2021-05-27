@@ -3,10 +3,10 @@
 {% load widget_tweaks %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a href={% url 'ordos:ordos_list' %}>Ordos</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Ordos</a></li>
 
-    {% if ordo %}
-        <li class="breadcrumb-item"><a href={% url 'ordos:ordo_details' ordo.id %}>{{ ordo }}</a></li>
+    {% if calendar %}
+        <li class="breadcrumb-item"><a href={% url 'calendars:calendar_details' calendar.id %}>{{ calendar }}</a></li>
         <li class="breadcrumb-item active">Update</li>
     {% else %}
         <li class="breadcrumb-item active">Create</li>
@@ -14,10 +14,10 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-    {% if ordo %}
-        <h2 class="mb-4 green font-weight-bold">Update an ordo</h2>
+    {% if calendar %}
+        <h2 class="mb-4 green font-weight-bold">Update a calendar</h2>
     {% else %}
-        <h2 class="mb-4 green font-weight-bold">Create an ordo</h2>
+        <h2 class="mb-4 green font-weight-bold">Create a calendar</h2>
     {% endif %}
 
     <form class="d-flex flex-column align-items-center w-100 mb-3" method="post" novalidate>
@@ -51,10 +51,10 @@
 
         <!-- Validation -->
         <div class="d-flex justify-content-center">
-            {% if ordo %}
-                <a href={% url 'ordos:ordo_details' ordo.id %} class="btn btn-primary mx-3">Annuler</a>
+            {% if calendar %}
+                <a href={% url 'calendars:calendar_details' calendar.id %} class="btn btn-primary mx-3">Annuler</a>
             {% else %}
-                <a href={% url 'ordos:ordos_list' %} class="btn btn-primary mx-3">Annuler</a>
+                <a href={% url 'calendars:calendars_list' %} class="btn btn-primary mx-3">Annuler</a>
             {% endif %}
             <button type="submit" class="btn btn-success mx-3">Valider</button>
         </div>

@@ -1,11 +1,11 @@
-""" apps/ordos/models.py """
+""" apps/calendars/models.py """
 
 from django.contrib.auth.models import User
 from django.db import models
 
 
-class Ordo(models.Model):
-    """ Ordo model. """
+class Calendar(models.Model):
+    """ Calendar model. """
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
