@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active">Docs</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <h1>Welcome to Ordomatic's docs!</h1>
+    <i>Here you will find everything you need to master Ordomatic…</i>
+
+    <div class="col-4 mt-4">
+        {% for page in pages %}
+            <div class="w-100 mb-2">
+                <a href={% url 'docs:'|add:page.url %} style="font-size: 14pt;">
+                    {{ forloop.counter }}. {{ page.title }}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
