@@ -3,7 +3,7 @@
 from datetime import date, timedelta
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
 from .dates import calculate_easter
@@ -116,9 +116,9 @@ def day_details(request, **kwargs):
     category = kwargs['category']
 
     if category == 'tempo':
-        day = DayTempo.objects.get(pk=kwargs['pk'])
+        day = get_object_or_404(DayTempo, pk=kwargs['pk'])
     else:
-        day = DaySancto.objects.get(pk=kwargs['pk'])
+        day = get_object_or_404(DaySancto, pk=kwargs['pk'])
 
     return render(
         request,
@@ -133,8 +133,11 @@ def day_details(request, **kwargs):
 def day_update(request, **kwargs):
     """ Update a day. """
     category = kwargs['category']
-    day = DayTempo.objects.get(pk=kwargs['pk']) \
-        if category == 'tempo' else DaySancto.objects.get(pk=kwargs['pk'])
+
+    if category == 'tempo':
+        day = get_object_or_404(DayTempo, pk=kwargs['pk'])
+    else:
+        day = get_object_or_404(DaySancto, pk=kwargs['pk'])
 
     if request.method == 'POST':
         form = DayTempoForm(request.POST, instance=day) \
@@ -169,8 +172,11 @@ def day_update(request, **kwargs):
 def day_delete(request, **kwargs):
     """ Delete a day. """
     category = kwargs['category']
-    day = DayTempo.objects.get(pk=kwargs['pk']) \
-        if category == 'tempo' else DaySancto.objects.get(pk=kwargs['pk'])
+
+    if category == 'tempo':
+        day = get_object_or_404(DayTempo, pk=kwargs['pk'])
+    else:
+        day = get_object_or_404(DaySancto, pk=kwargs['pk'])
 
     if request.method == 'POST':
         day.delete()
