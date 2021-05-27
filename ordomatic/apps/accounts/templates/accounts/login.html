@@ -66,8 +66,12 @@
             </div>
         </div>
 
-        <div>
+        <div class="mb-5">
             <button type="submit" class="btn btn-primary">Validate</button>
+        </div>
+
+        <div>
+            No account yet? <a href={% url 'accounts:signup' %}>Create an account!</a>
         </div>
     </form>
 {% endblock content %}
