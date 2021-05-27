@@ -2,6 +2,7 @@
 
 from datetime import date, timedelta
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -9,8 +10,10 @@ from django.urls import reverse
 from .dates import calculate_easter
 from .forms import DayTempoForm, DaySanctoForm
 from .models import DaySancto, DayTempo
+from apps.calendars.models import Calendar
 
 
+@login_required
 def fetch_days(year):
     """ Returns a list of the days of the given year. """
     days = {}  # {'date': {'tempo': object, 'sancto': object}, …}.
@@ -48,20 +51,28 @@ def fetch_days(year):
     return days
 
 
-def home(request):
-    """ Home page of days. """
+@login_required
+def home(request, **kwargs):
+    """ Home page of the days of a given calendar. """
+    calendar = Calendar.objects.get(pk=kwargs['calendar'])
     return render(
         request,
         'days/home.html',
-        {},
+        {
+            'calendar': calendar,
+        },
     )
 
 
+@login_required
 def days_list(request, **kwargs):
     """ List of days. """
     category = kwargs['category']
-    tempo = DayTempo.objects.all().order_by('baseline', 'add')
-    sancto = DaySancto.objects.all().order_by('month', 'day')
+    calendar = Calendar.objects.get(pk=kwargs['calendar'])
+    tempo = DayTempo.objects.filter(
+        calendar=calendar).order_by('baseline', 'add')
+    sancto = DaySancto.objects.filter(
+        calendar=calendar).order_by('month', 'day')
 
     if category == 'tempo':
         url = 'days/list_tempo.html'
@@ -75,25 +86,31 @@ def days_list(request, **kwargs):
         url,
         {
             'category': category,
+            'calendar': calendar,
             'days': days,
         },
     )
 
 
+@login_required
 def day_create(request, **kwargs):
     """ Create a day. """
     category = kwargs['category']
+    calendar = Calendar.objects.get(pk=kwargs['calendar'])
 
     if request.method == 'POST':
         form = DayTempoForm(request.POST) \
             if category == 'tempo' else DaySanctoForm(request.POST)
         if form.is_valid():
-            form.save()
+            day = form.save(commit=False)
+            day.calendar = calendar
+            day.save()
             return HttpResponseRedirect(
                 reverse(
                     'days:days_list',
                     kwargs={
                         'category': category,
+                        'calendar': kwargs['calendar'],
                     }
                 )
             )
@@ -107,13 +124,16 @@ def day_create(request, **kwargs):
         {
             'form': form,
             'category': category,
+            'calendar': calendar,
         }
     )
 
 
+@login_required
 def day_details(request, **kwargs):
     """ Details of a day. """
     category = kwargs['category']
+    calendar = Calendar.objects.get(pk=kwargs['calendar'])
 
     if category == 'tempo':
         day = get_object_or_404(DayTempo, pk=kwargs['pk'])
@@ -124,12 +144,14 @@ def day_details(request, **kwargs):
         request,
         'days/details.html',
         {
-            'day': day,
             'category': category,
+            'calendar': calendar,
+            'day': day,
         },
     )
 
 
+@login_required
 def day_update(request, **kwargs):
     """ Update a day. """
     category = kwargs['category']
@@ -139,16 +161,21 @@ def day_update(request, **kwargs):
     else:
         day = get_object_or_404(DaySancto, pk=kwargs['pk'])
 
+    calendar = Calendar.objects.get(pk=kwargs['calendar'])
+
     if request.method == 'POST':
         form = DayTempoForm(request.POST, instance=day) \
             if category == 'tempo' else DaySanctoForm(request.POST, instance=day)
         if form.is_valid():
-            form.save()
+            day = form.save(commit=False)
+            day.calendar = calendar
+            day.save()
             return HttpResponseRedirect(
                 reverse(
                     'days:day_details',
                     kwargs={
                         'category': category,
+                        'calendar': kwargs['calendar'],
                         'pk': day.pk,
                     },
                 )
@@ -163,12 +190,14 @@ def day_update(request, **kwargs):
         'days/form.html',
         {
             'form': form,
-            'day': day,
             'category': kwargs['category'],
+            'calendar': calendar,
+            'day': day,
         },
     )
 
 
+@login_required
 def day_delete(request, **kwargs):
     """ Delete a day. """
     category = kwargs['category']
@@ -177,6 +206,8 @@ def day_delete(request, **kwargs):
         day = get_object_or_404(DayTempo, pk=kwargs['pk'])
     else:
         day = get_object_or_404(DaySancto, pk=kwargs['pk'])
+
+    calendar = Calendar.objects.get(pk=kwargs['calendar'])
 
     if request.method == 'POST':
         day.delete()
@@ -195,6 +226,7 @@ def day_delete(request, **kwargs):
             'days/delete.html',
             {
                 'category': category,
+                'calendar': calendar,
                 'day': day,
             },
         )

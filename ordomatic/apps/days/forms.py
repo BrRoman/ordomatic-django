@@ -47,6 +47,7 @@ class DayForm(forms.ModelForm):
     class Meta:
         model = Day
         fields = [
+            'calendar',
             'name',
             'header',
             'body',
@@ -71,6 +72,7 @@ class DayTempoForm(DayForm):
     class Meta:
         model = DayTempo
         fields = [
+            'calendar',
             'name',
             'header',
             'body',
@@ -105,6 +107,7 @@ class DaySanctoForm(DayForm):
     class Meta:
         model = DaySancto
         fields = [
+            'calendar',
             'name',
             'header',
             'body',

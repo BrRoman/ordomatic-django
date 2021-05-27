@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Ordos</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Calendars</a></li>
 
     {% if calendar %}
         <li class="breadcrumb-item"><a href={% url 'calendars:calendar_details' calendar.id %}>{{ calendar }}</a></li>

@@ -1,13 +1,15 @@
 {% extends 'main.html' %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a href={% url 'days:home' %}>Days</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Calendars</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendar_details' calendar.pk %}>{{ calendar }}</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:home' calendar.pk %}>Days</a></li>
     <li class="breadcrumb-item active">Sancto</li>
 {% endblock breadcrumbs %}
 
 {% block content %}
     <h1>{{ category|title }}</h1>
-    <a href={% url 'days:day_create' 'sancto' %}>Create a new day</a>
+    <a href={% url 'days:day_create' calendar.pk 'sancto' %}>Create a new day</a>
 
     <table class="table table-sm table-bordered">
         <thead>
@@ -29,7 +31,7 @@
                     <td class="col-3">{{ day.header }}</td>
                     <td class="col-3">{{ day.force }}</td>
                     <td class="col-1">
-                        <a href={% url 'days:day_details' 'sancto' day.pk %}>
+                        <a href={% url 'days:day_details' calendar.pk 'sancto' day.pk %}>
                             <span class="fas fa-eye" title="See details of this day"></span>
                         </a>
                     </td>

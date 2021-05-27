@@ -1,5 +1,11 @@
 {% extends 'main.html' %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Calendars</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendar_details' calendar.id %}>{{ calendar }}</a></li>
+    <li class="breadcrumb-item active">Delete</li>
+{% endblock breadcrumbs %}
+
 {% block content %}
     <form method="post">
         {% csrf_token %}

@@ -6,12 +6,14 @@ from . import views
 
 app_name = 'days'
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('<str:category>/', views.days_list, name='days_list'),
-    path('<str:category>/create/', views.day_create, name='day_create'),
-    path('<str:category>/<int:pk>/', views.day_details, name='day_details'),
-    path('<str:category>/<int:pk>/update/',
+    path('<int:calendar>/', views.home, name='home'),
+    path('<int:calendar>/<str:category>/', views.days_list, name='days_list'),
+    path('<int:calendar>/<str:category>/create/',
+         views.day_create, name='day_create'),
+    path('<int:calendar>/<str:category>/<int:pk>/',
+         views.day_details, name='day_details'),
+    path('<int:calendar>/<str:category>/<int:pk>/update/',
          views.day_update, name='day_update'),
-    path('<str:category>/<int:pk>/delete/',
+    path('<int:calendar>/<str:category>/<int:pk>/delete/',
          views.day_delete, name='day_delete'),
 ]

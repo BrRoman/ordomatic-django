@@ -3,10 +3,12 @@
 {% load widget_tweaks %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a href={% url 'days:home' %}>Days</a></li>
-    <li class="breadcrumb-item"><a href={% url 'days:days_list' category %}>{{ category|title }}</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Calendars</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendar_details' calendar.pk %}>{{ calendar }}</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:home' calendar.pk %}>Days</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:days_list' calendar.pk category %}>{{ category|title }}</a></li>
     {% if day %}
-        <li class="breadcrumb-item"><a href={% url 'days:day_details' category day.pk %}>{{ day }}</a></li>
+        <li class="breadcrumb-item"><a href={% url 'days:day_details' calendar.pk category day.pk %}>{{ day }}</a></li>
         <li class="breadcrumb-item active">Update</li>
     {% else %}
         <li class="breadcrumb-item active">Create</li>

@@ -1,8 +1,10 @@
 {% extends 'main.html' %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item"><a href={% url 'days:home' %}>Days</a></li>
-    <li class="breadcrumb-item"><a href={% url 'days:days_list' category %}>{{ category|title }}</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Calendars</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendar_details' calendar.pk %}>{{ calendar }}</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:home' calendar.pk %}>Days</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:days_list' calendar.pk category %}>{{ category|title }}</a></li>
     <li class="breadcrumb-item active">{{ day }}</li>
 {% endblock breadcrumbs %}
 
@@ -36,7 +38,7 @@
         </table>
     </div>
 
-    <a href={% url 'days:day_update' category day.pk%}>Edit this day</a>
-    <a href={% url 'days:day_delete' category day.pk%}>Delete this day</a>
-    <a href={% url 'days:days_list' category %}>Back to list</a>
+    <a href={% url 'days:day_update' calendar.pk category day.pk%}>Edit this day</a>
+    <a href={% url 'days:day_delete' calendar.pk category day.pk%}>Delete this day</a>
+    <a href={% url 'days:days_list' calendar.pk category %}>Back to list</a>
 {% endblock content %}
