@@ -26,8 +26,8 @@
             </div>
         </nav>
 
-        <div class="d-flex">
-            <div class="dropdown ml-3">
+        <ol class="breadcrumb w-100">
+            <div class="dropdown mr-3">
                 <div class="dropdown">
                     <button class="dropdown-button fas fa-bars"></button>
                     <div class="dropdown-content p-2">
@@ -49,12 +49,10 @@
                 </div>
             </div>
 
-            <ol class="breadcrumb w-100">
-                <li class="breadcrumb-item"><a href={% url 'main:home' %}><span class="fas fa-home"></span></a></li>
-                {% block breadcrumbs %}
-                {% endblock breadcrumbs %}
-            </ol>
-        </div>
+            <li class="breadcrumb-item"><a href={% url 'main:home' %}><span class="fas fa-home"></span></a></li>
+            {% block breadcrumbs %}
+            {% endblock breadcrumbs %}
+        </ol>
 
         <div id="content" class="d-flex">
             <div class="w-100 d-flex flex-column align-items-center mx-5 my-3">
