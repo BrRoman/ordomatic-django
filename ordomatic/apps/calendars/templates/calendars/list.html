@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active">Calendars</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <h3>List of calendars</h3>
+
+    <a href={% url 'calendars:calendar_create' %}>Create a new calendar</a>
+
+    <ul>
+        {% for calendar in calendars %}
+            <li><a href={% url 'calendars:calendar_details' calendar.pk %}>{{ calendar }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

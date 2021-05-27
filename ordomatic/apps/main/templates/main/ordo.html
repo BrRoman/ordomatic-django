@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block nav %}
+    <div class="text-right">
+        <select name="calendars" id="calendars" class="mr-3" style="width: 200px;">
+            {% for calendar in calendars %}
+                <option value="{{ calendar.pk }}">{{ calendar }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="text-right">
+        <input type="number" id="year" value={{ year }} style="width: 100px;">
+    </div>
+{% endblock nav %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active">Ordo</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <div class="d-flex w-100">
+        <div id="ordo_block" class="col-8 border border-secondary rounded p-3 mx-auto"></div>
+    </div>
+{% endblock content %}

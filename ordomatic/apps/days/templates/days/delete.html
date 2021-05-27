@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendars_list' %}>Calendars</a></li>
+    <li class="breadcrumb-item"><a href={% url 'calendars:calendar_details' calendar.pk %}>{{ calendar }}</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:home' calendar.pk %}>Days</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:days_list' calendar.pk category %}>{{ category|title }}</a></li>
+    <li class="breadcrumb-item"><a href={% url 'days:day_details' calendar.pk category day.pk %}>{{ day }}</a></li>
+    <li class="breadcrumb-item active">Delete</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+
+        <h3 class="red font-weight-bold">Are you sure you want to delete this day?</h3>
+        <h4 class="text-center mb-5">({{ day }})</h4>
+
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-danger mx-3">Yes</button>
+            <a href={% url 'days:day_details' calendar.pk category day.pk %} class="btn btn-primary mx-3">No</a>
+        </div>
+    </form>
+{% endblock content %}

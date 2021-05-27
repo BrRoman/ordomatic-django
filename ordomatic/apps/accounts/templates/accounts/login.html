@@ -1,0 +1,77 @@
+{% extends 'main.html' %}
+
+{% load widget_tweaks %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active">Login</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <h2>Login!</h2>
+
+    <form class="d-flex flex-column align-items-center w-100 mb-3" method="post" novalidate>
+        <div class="col-4">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="form-group">
+                {{ form.username.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.username.errors %}
+                        {% render_field form.username class="form-control is-invalid" %}
+                        {% for error in form.username.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.username class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.username class="form-control" %}
+                {% endif %}
+
+                {% if form.username.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.username.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                {{ form.password.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.password.errors %}
+                        {% render_field form.password class="form-control is-invalid" %}
+                        {% for error in form.password.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.password class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.password class="form-control" %}
+                {% endif %}
+
+                {% if form.password.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.password.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <button type="submit" class="btn btn-primary">Validate</button>
+        </div>
+
+        <div>
+            No account yet? <a href={% url 'accounts:signup' %}>Create an account!</a>
+        </div>
+    </form>
+{% endblock content %}

@@ -1,0 +1,72 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Ordomatic</title>
+        <link rel="icon" href={% static 'img/ordomatic.png' %}>
+        <link rel="stylesheet" href={% static 'js/jquery-ui-1.12.1/jquery-ui.min.css' %}>
+        <link rel="stylesheet" href={% static 'css/fontawesome-free-5.15.1-web/css/all.min.css' %}>
+        <link rel="stylesheet" href={% static 'css/bootstrap-4.0.0-dist/css/bootstrap.min.css' %}>
+        <link rel="stylesheet" href={% static "css/tempusdominus-bootstrap-4.min.css" %}>
+        <link rel="stylesheet/less" href={% static 'css/ordomatic.less' %}>
+        {% block css %}{% endblock css %}
+
+        <style>@font-face{font-family: "LucidaHW"; src: url("{% static 'fonts/TR Lucida Handwriting Italic.ttf' %}")}</style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div id="logo" class="col-3 mr-auto d-flex align-items-center">
+                <a href={% url 'main:home' %}>
+                    <span id="title" class="orange my-0">Ordomatic</span>
+                </a>
+            </div>
+
+            {% block nav %}{% endblock nav %}
+        </nav>
+
+        <ol class="breadcrumb w-100">
+            <div class="dropdown mr-3">
+                <div class="dropdown">
+                    <button class="dropdown-button fas fa-bars"></button>
+                    <div class="dropdown-content p-2">
+                        {% if user.is_authenticated %}
+                            <a href={% url 'accounts:details' %} class="user font-weight-bold mb-2">
+                                <span class="fas fa-user grey mr-2"></span>{{ user }}
+                            </a>
+                            <a href={% url 'calendars:calendars_list' %}>Manage your calendars</a>
+                        {% endif %}
+
+                        <a href={% url 'main:ordo' %}>Create an ordo</a>
+
+                        {% if user.is_authenticated %}
+                            <a href={% url 'accounts:logout' %}>Logout</a>
+                        {% else %}
+                            <a href={% url 'accounts:login' %}>Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <li class="breadcrumb-item"><a href={% url 'main:home' %}><span class="fas fa-home"></span></a></li>
+            {% block breadcrumbs %}
+            {% endblock breadcrumbs %}
+        </ol>
+
+        <div id="content" class="d-flex">
+            <div class="w-100 d-flex flex-column align-items-center mx-5 my-3">
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+    </body>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'css/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/less.min.js' %}"></script>
+    <script src="{% static 'js/ordomatic.js' %}"></script>
+    {% block javascript %}{% endblock javascript %}
+</html>
