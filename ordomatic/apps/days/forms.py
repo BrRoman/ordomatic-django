@@ -2,9 +2,6 @@
 
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms.models import model_to_dict
-
-from tempus_dominus.widgets import DatePicker, TimePicker
 
 from .models import Day, DaySancto, DayTempo
 
