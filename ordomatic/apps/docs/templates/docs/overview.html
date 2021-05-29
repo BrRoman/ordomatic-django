@@ -7,4 +7,30 @@
 
 {% block content %}
     <h2>Overview of Ordomatic</h2>
+
+    <div class="fs-10 col-8">
+        <p>Here the text.</p>
+    </div>
+
+    <div class="d-flex align-content-between w-100 mt-5">
+        <div class="col-5 d-flex justify-content-start">
+            <p class="btn btn-primary text-left font-weight-bold">
+                <a href={% url 'docs:what_is_an_ordo' %} class="text-white"><span class="fas fa-arrow-left mr-3"></span>What is an ordo?
+                </a>
+            </p>
+        </div>
+
+        <div class="col-2 d-flex justify-content-center">
+            <p class="text-center w-100">
+                <a href={% url 'docs:index' %} class="btn btn-warning text-white font-weight-bold">Menu</a>
+            </p>
+        </div>
+
+        <div class="col-5 d-flex justify-content-end">
+            <p class="btn btn-primary text-right font-weight-bold">
+                <a href={% url 'docs:create_an_account' %} class="text-white">Create an account<span class="fas fa-arrow-right ml-3"></span>
+                </a>
+            </p>
+        </div>
+    </div>
 {% endblock content %}

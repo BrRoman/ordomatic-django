@@ -24,4 +24,21 @@
         <p>There are some rules. Some of them are quite simple, other are more complicated. But you can see each day of the Temporal or the Sanctoral as an element with a given <b>force</b> (10, 20, 30, etc.). For example, the feast of saint Joseph (19 March) has a force of 90. The Palm's Sunday has a force of 120. So if those days happen the same day, you will celebrate the Palm's Sunday (and accessoirement, the feast of saint Joseph, which can't be overwritten, will be celebrated after the Easter's octave, but it is another history).</p>
     </div>
 
+    <div class="d-flex align-content-between w-100 mt-5">
+        <div class="col-5 d-flex justify-content-start">
+        </div>
+
+        <div class="col-2 d-flex justify-content-center">
+            <p class="text-center w-100">
+                <a href={% url 'docs:index' %} class="btn btn-warning text-white font-weight-bold">Menu</a>
+            </p>
+        </div>
+
+        <div class="col-5 d-flex justify-content-end">
+            <p class="btn btn-primary text-right font-weight-bold">
+                <a href={% url 'docs:overview' %} class="text-white">Overview of Ordomatic<span class="fas fa-arrow-right ml-3"></span>
+                </a>
+            </p>
+        </div>
+    </div>
 {% endblock content %}
