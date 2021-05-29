@@ -1,6 +1,7 @@
 """ apps/main/views.py """
 
 from datetime import date
+from django.contrib.auth.models import User
 
 from django.shortcuts import render
 
@@ -19,7 +20,16 @@ def home(request):
 
 def ordo(request):
     """ Ordo page of Ordomatic. """
-    calendars = Calendar.objects.filter(owner=request.user).order_by('name')
+    calendars = Calendar.objects \
+        .filter(
+            owner=User.objects.filter(username='Universal')
+            .get()
+        )
+    # TODO: add all the public calendars of other users.
+    if str(request.user) != 'AnonymousUser':
+        calendars_owner = Calendar.objects.filter(
+            owner=request.user).order_by('name')
+        calendars = calendars_owner.union(calendars)
     return render(
         request,
         'main/ordo.html',
