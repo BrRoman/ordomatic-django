@@ -9,12 +9,12 @@ def index(request):
         {
             'pages': [
                 {
-                    'url': 'overview',
-                    'title': 'Overview',
-                },
-                {
                     'url': 'what_is_an_ordo',
                     'title': 'What is an ordo?',
+                },
+                {
+                    'url': 'overview',
+                    'title': 'Overview of Ordomatic',
                 },
                 {
                     'url': 'create_an_account',
