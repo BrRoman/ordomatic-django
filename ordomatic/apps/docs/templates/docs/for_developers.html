@@ -6,5 +6,87 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-    <h2>For developers</h2>
+    <h1>For developers</h1>
+    <h6 class="mb-5">(Linux only for now)</h6>
+
+    <div class="doc-page col-8">
+        <h3 class="text-left font-weight-bold mt-5">How to run Ordomatic locally?</h3>
+
+        <p>Required: <span class="highlight">git</span>, <span class="highlight">python3.7</span>, <span class="highlight">virtualenv</span>, <span class="highlight">pip</span> and <span class="highlight">MySQL</span>.</p>
+
+        <div class="mt-3"><b>1.</b> In a terminal, cd into the directory in which you have chosen to install your Ordomatic, and hit:</div>
+
+        <div class="terminal mt-3">
+            git clone https://github.com/BrRoman/ordomatic ordomatic</br>
+        </div>
+
+        <div class="caution d-flex mt-3">
+            <span class="col-1 fas fa-exclamation-circle"></span>
+            <p class="col-11 mb-0">If you have made a fork of Ordomatic (see below: 'How to contribute to Ordomatic?'), then replace the url with the url of your fork.</p>
+        </div>
+
+        <div class="mt-5"><b>2.</b> Create a virtualenv in your repo, and install all the required Python packages in this virtualenv:</div>
+
+        <div class="terminal mt-3">
+            virtualenv -p python3.7 ordomatic</br>
+            cd ordomatic</br>
+            source bin/activate</br>
+            pip install -r requirements.txt
+        </div>
+        
+        <div class="mt-5"><b>3.</b> Edit the file <span>/ordomatic/ordomatic/ordomatic/settings.py</span>:</div>
+
+        <ul>
+            <li>At the line 25, replace the empty string by your secret key. You can generate this secret key online <a href="https://djecrety.ir">here</a>.</li>
+            <li>In the block concerning the database, enter your username and your password.</li>
+        </ul>
+
+        <div class="mt-5"><b>4.</b> Create your MySQL database:</div>
+
+        <div class="mt-0">
+            <div class="ml-4 mt-2">1. In a mysql console:</div>
+            <div class="terminal">
+                >>> CREATE DATABASE ordomatic;</br>
+                >>> exit;
+            </div>
+
+            <div class="ml-4 mt-2">2. Then in a terminal:</div>
+            <div class="terminal">
+                ./manage.py makemigrations</br>
+                ./manage.py migrate
+            </div>
+        </div>
+
+        <h3 class="text-left font-weight-bold mt-5">How to contribute to Ordomatic?</h3>
+
+        <div>
+            <div>Before all, make a fork of Ordomatic on github: go to <a href="https://github.com/BrRoman/ordomatic">https://github.com/BrRoman/ordomatic</a> and click on the button "Fork".</div>
+            <div>This will make a copy of Ordomatic on your own account.</div>
+            <div>Clone this copy to your computer with "git clone".</div>
+
+            <div class="mt-3">Then edit the code on your local machine and <a href="https://github.com/BrRoman/ordomatic/pulls">make a pull request</a> on Github.</div>
+
+            <div class="mt-3">You can submit an issue too, <a href="https://github.com/BrRoman/ordomatic/issues">here</a>.</div>
+
+            <div class="mt-3">Every contribution will be welcome! You can improve the code, add a feature or correct the docs…</div>
+        </div>
+    </div>
+
+    <div class="d-flex align-content-between w-100 mt-5">
+        <div class="col-5 d-flex justify-content-start">
+            <p class="btn btn-primary text-left font-weight-bold">
+                <a href={% url 'docs:create_an_ordo' %} class="text-white"><span class="fas fa-arrow-left mr-3"></span>Create an ordo!
+                </a>
+            </p>
+        </div>
+
+        <div class="col-2 d-flex justify-content-center">
+            <p class="text-center w-100">
+                <a href={% url 'docs:index' %} class="btn btn-warning text-white font-weight-bold">Menu</a>
+            </p>
+        </div>
+
+        <div class="col-5 d-flex justify-content-end">
+        </div>
+    </div>
 {% endblock content %}

@@ -6,5 +6,400 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-    <h2>Overview of Ordomatic</h2>
+    <h1 class="mb-5">Overview of Ordomatic</h1>
+
+    <div class="doc-page col-8">
+        <p>Now that you know <a href={% url 'docs:what_is_an_ordo' %}>what is an ordo</a>, here are the main lines of how Ordomatic works.</p>
+
+        <p>As we have said, an ordo is the superposition of two calendars: the Temporal and the Sanctoral. So you will have to give to Ordomatic a list of "Temporal-days" and a list of "Sanctoral-days", each one of them with a number giving their force. This number will allow Ordomatic to compare each day of the Temporal and the Sanctoral and determines which one to chose for a given date. You will have to indicate too, for each one of these days, a "header" and a "body", that is, the title and the content of each day, which will appear in the final ordo. Finally, for each day of the Temporal, you will have to give a "baseline" (among "start", "easter" and "end") and a "number of days" separating this day from the baseline (for example, the Palm Sunday's baseline is "Easter" and the distance is "-7").</p>
+
+        <p>Perhaps an example will be more clear…</p>
+
+        <h3 class="text-left font-weight-bold mt-5">A first example</h3>
+
+        <p>Let's say that you have entered in Ordomatic (we will see later how) these Temporal-days, the 7 first ones of a liturgical year:</p>
+
+        <div class="w-75 mx-auto">
+            <table class="table table-sm table-bordered table-striped w-100">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col-2 text-center">Name</th>
+                        <th class="col-1 text-center">Force</th>
+                        <th class="col-2 text-center">Baseline</th>
+                        <th class="col-1 text-center">Days</th>
+                        <th class="col-3 text-center">Header</th>
+                        <th class="col-3 text-center">Body</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>First Sunday of Advent</td>
+                        <td class="text-center">120</td>
+                        <td>Start</td>
+                        <td class="text-center">0</td>
+                        <td>First Sunday of Advent</td>
+                        <td>Body of first Sunday of Advent, bla bla…</td>
+                    </tr>
+                    <tr>
+                        <td>First Monday of Advent</td>
+                        <td class="text-center">20</td>
+                        <td>Start</td>
+                        <td class="text-center">1</td>
+                        <td>Monday after first Sunday of Advent</td>
+                        <td>Body of first Monday of Advent, bla bla…</td>
+                    </tr>
+                    <tr>
+                        <td>First Tuesday of Advent</td>
+                        <td class="text-center">20</td>
+                        <td>Start</td>
+                        <td class="text-center">2</td>
+                        <td>Tuesday after first Sunday of Advent</td>
+                        <td>Body of first Tuesday of Advent, bla bla…</td>
+                    </tr>
+                    <tr>
+                        <td>First Wednedsday of Advent</td>
+                        <td class="text-center">20</td>
+                        <td>Start</td>
+                        <td class="text-center">3</td>
+                        <td>Wednesday after first Sunday of Advent</td>
+                        <td>Body of first Wednedsday of Advent, bla bla…</td>
+                    </tr>
+                    <tr>
+                        <td>First Thursday of Advent</td>
+                        <td class="text-center">20</td>
+                        <td>Start</td>
+                        <td class="text-center">4</td>
+                        <td>Thursday after first Sunday of Advent</td>
+                        <td>Body of first Thursday of Advent, bla bla…</td>
+                    </tr>
+                    <tr>
+                        <td>First Friday of Advent</td>
+                        <td class="text-center">20</td>
+                        <td>Start</td>
+                        <td class="text-center">5</td>
+                        <td>Friday after first Sunday of Advent</td>
+                        <td>Body of first Friday of Advent, bla bla…</td>
+                    </tr>
+                    <tr>
+                        <td>First Saturday of Advent</td>
+                        <td class="text-center">20</td>
+                        <td>Start</td>
+                        <td class="text-center">6</td>
+                        <td>Saturday after first Sunday of Advent</td>
+                        <td>Body of first Saturday of Advent, bla bla…</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>And here are your super Sanctoral-days:</p>
+
+        <div class="w-75 mx-auto">
+            <table class="table table-sm table-bordered table-striped w-100">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col-3 text-center">Name</th>
+                        <th class="col-1 text-center">Force</th>
+                        <th class="col-4 text-center">Header</th>
+                        <th class="col-4 text-center">Body</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Saint Andrew (30 November)</td>
+                        <td class="text-center">70</td>
+                        <td>Saint Andrew, Feast</td>
+                        <td>Body of saint Andrew, bla bla…</td>
+                    </tr>
+                    <tr>
+                        <td>Saint Franciscus Xavier (3 December)</td>
+                        <td class="text-center">40</td>
+                        <td>Saint Franciscus Xavier, Memory</td>
+                        <td>Body of saint Franciscus Xavier, bla bla…</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>Now let's say that this year, the first Sunday of Advent is on 29 November (like in year 2020-2021). The first lines of your ordo will look like that:</p>
+
+        <div class="w-100 d-flex flex-column align-items-center my-3">
+            <div class="ordo col-8 border rounded px-5 py-2">
+                <h4 class="text-center my-4"><b>November</b></h4>
+
+                <p class="mb-0"><b>Sun, 29</b> - First Sunday of Advent</p>
+                <p class="ml-3">Body of first Sunday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Mon, 30</b> - <span class="red">Saint Andrew, Feast</span></p>
+                <p class="ml-3">Body of saint Andrew, bla bla…</p>
+
+                <h4 class="text-center my-4"><b>December</b></h4>
+
+                <p class="mb-0"><b>Tue, 1</b> - Tuesday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Tuesday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Wed, 2</b> - Wednesday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Wednesday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Thu, 3</b> - <span class="red">Saint Franciscus Xavier, Memory</span></p>
+                <p class="ml-3">Body of saint Franciscus Xavier, bla bla…</p>
+
+                <p class="mb-0"><b>Fri, 4</b> - Friday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Friday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Sat, 5</b> - Saturday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Saturday of Advent, bla bla…</p>
+            </div>
+        </div>
+
+        <h3 class="text-left font-weight-bold mt-5">What has happened?</h3>
+
+        <p>Ordomatic has calculated 3 "baselines". A "baseline" is a date from which other dates will be calculated. For example, from "easter" baseline, you get all the dates of the Lent time and the dates of the Easter time. For the liturgical year 2021, the 3 baselines are:</p>
+
+        <ul>
+            <li>"start" = Sunday 29 November</li>
+            <li>"easter" = Sunday 4 April</li>
+            <li>"end" = Sunday 28 November ("end" of year <b><i>y</i></b> = "start" of year <b><i>y + 1</i></b>)</li>
+        </ul>
+
+        <p>The first baseline ("start") is the most important for our example, as we haven't entered Temporal-days that have "easter" or "end" as a baseline.</p>
+
+        <p>After having calculated the date of "start" baseline, Ordomatic has searched in your list of Temporal-days all the days that have "start" as a baseline. He has found 7 days (those which we have entered in the table above) and he has determined at which date they happen for the liturgical year 2021, according to the field "Days" of each one of them:</p>
+
+        <ul>
+            <li>"First Sunday of Advent" = "start" + 0 days = Sunday 29 November</li>
+            <li>"First Monday of Advent" = "start" + 1 days = Monday 30 November</li>
+            <li>"First Tuesday of Advent" = "start" + 2 days = Tuesday 1 December</li>
+            <li>"First Wednesday of Advent" = "start" + 3 days = Wednesday 2 December</li>
+            <li>"First Thursday of Advent" = "start" + 4 days = Thursday 3 December</li>
+            <li>"First Friday of Advent" = "start" + 5 days = Friday 4 December</li>
+            <li>"First Saturday of Advent" = "start" + 6 days = Saturday 5 December</li>
+        </ul>
+
+        <p>At this step, Ordomatic can output your ordo, but with the Temporal-days only, thanks to the data you have entered above. Your ordo would look like that:</p>
+
+        <div class="w-100 d-flex flex-column align-items-center my-3">
+            <div class="ordo col-8 border rounded px-5 py-2">
+                <h4 class="text-center my-4"><b>November</b></h4>
+
+                <p class="mb-0"><b>Sun, 29</b> - First Sunday of Advent</p>
+                <p class="ml-3">Body of first Sunday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Mon, 30</b> - Monday after first Sunday of Advent</span></p>
+                <p class="ml-3">Body of first Monday of Advent, bla bla…</p>
+
+                <h4 class="text-center my-4"><b>December</b></h4>
+
+                <p class="mb-0"><b>Tue, 1</b> - Tuesday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Tuesday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Wed, 2</b> - Wednesday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Wednesday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Thu, 3</b> - Thursday after first Sunday of Advent</span></p>
+                <p class="ml-3">Body of first Thursday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Fri, 4</b> - Friday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Friday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Sat, 5</b> - Saturday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Saturday of Advent, bla bla…</p>
+            </div>
+        </div>
+
+        <p>At a second step, Ordomatic has searched, for each one of the calculated date (29 November 2021, 30 November 2021 etc.) if a day in your <b>Sanctoral</b>-days had the corresponding month and day. He has founded 2: Saint Andrew and saint Franciscus Xavier.</p>
+
+        <p>Then he has compared the respective forces of the Temporal-days and of the Sanctoral-days:</p>
+
+        <div class="w-75 mx-auto">
+            <table class="table table-sm table-bordered table-striped w-100">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col-3 text-center">Date</th>
+                        <th class="col-3 text-center">Temporal</th>
+                        <th class="col-3 text-center">Sanctoral</th>
+                        <th class="col-3 text-center">Winner!</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Sunday 29 November</td>
+                        <td>First Sunday of Advent [120]</td>
+                        <td></td>
+                        <td>First Sunday of Advent</td>
+                    </tr>
+                    <tr>
+                        <td>Monday 30 November</td>
+                        <td>First Monday of Advent [20]</td>
+                        <td>Saint Andrew [70]</td>
+                        <td>Saint Andrew</td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday 1 December</td>
+                        <td>First Tuesday of Advent [20]</td>
+                        <td></td>
+                        <td>First Tuesday of Advent</td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday 2 December</td>
+                        <td>First Wednedsday of Advent [20]</td>
+                        <td></td>
+                        <td>First Wednedsday of Advent</td>
+                    </tr>
+                    <tr>
+                        <td>Thursday 3 December</td>
+                        <td>First Thursday of Advent [20]</td>
+                        <td>Saint Franciscus Xavier [40]</td>
+                        <td>Saint Franciscus Xavier</td>
+                    </tr>
+                    <tr>
+                        <td>Friday 4 December</td>
+                        <td>First Friday of Advent [20]</td>
+                        <td></td>
+                        <td>First Friday of Advent</td>
+                    </tr>
+                    <tr>
+                        <td>Saturday 5 December</td>
+                        <td>First Saturday of Advent [20]</td>
+                        <td></td>
+                        <td>First Saturday of Advent</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>Hence the output that you can see above.</p>
+
+        <h3 class="text-left font-weight-bold mt-5">Another example</h3>
+
+        <p>Let's say that another year, the first Sunday of Advent is on 30 November (like in year 2014-2015). This time, the comparison of Temporal and Sanctoral will be:</p>
+
+        <div class="w-75 mx-auto">
+            <table class="table table-sm table-bordered table-striped w-100">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col-3 text-center">Date</th>
+                        <th class="col-3 text-center">Temporal</th>
+                        <th class="col-3 text-center">Sanctoral</th>
+                        <th class="col-3 text-center">Winner!</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Sunday 30 November</td>
+                        <td>First Sunday of Advent [120]</td>
+                        <td>Saint Andrew [70]</td>
+                        <td>First Sunday of Advent</td>
+                    </tr>
+                    <tr>
+                        <td>Monday 1 December</td>
+                        <td>First Monday of Advent [20]</td>
+                        <td></td>
+                        <td>First Monday of Advent</td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday 2 December</td>
+                        <td>First Tuesday of Advent [20]</td>
+                        <td></td>
+                        <td>First Tuesday of Advent</td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday 3 December</td>
+                        <td>First Wednedsday of Advent [20]</td>
+                        <td>Saint Franciscus Xavier [40]</td>
+                        <td>Saint Franciscus Xavier</td>
+                    </tr>
+                    <tr>
+                        <td>Thursday 4 December</td>
+                        <td>First Thursday of Advent [20]</td>
+                        <td></td>
+                        <td>First Thursday of Advent</td>
+                    </tr>
+                    <tr>
+                        <td>Friday 5 December</td>
+                        <td>First Friday of Advent [20]</td>
+                        <td></td>
+                        <td>First Friday of Advent</td>
+                    </tr>
+                    <tr>
+                        <td>Saturday 6 December</td>
+                        <td>First Saturday of Advent [20]</td>
+                        <td></td>
+                        <td>First Saturday of Advent</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>And the first lines of your ordo would look like that:</p>
+
+        <div class="w-100 d-flex flex-column align-items-center my-3">
+            <div class="ordo col-8 border rounded px-5 py-2">
+                <h4 class="text-center my-4"><b>November</b></h4>
+
+                <p class="mb-0"><b>Sun, 30</b> - First Sunday of Advent</p>
+                <p class="ml-3">Body of first Sunday of Advent, bla bla…</p>
+
+                <h4 class="text-center my-4"><b>December</b></h4>
+
+                <p class="mb-0"><b>Mon, 1</b> - Monday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Monday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Tue, 2</b> - Tuesday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Tuesday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Wed, 3</b> - <span class="red">Saint Franciscus Xavier, Memory</span></p>
+                <p class="ml-3">Body of saint Franciscus Xavier, bla bla…</p>
+
+                <p class="mb-0"><b>Thu, 4</b> - Thursday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Thursday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Fri, 5</b> - Friday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Friday of Advent, bla bla…</p>
+
+                <p class="mb-0"><b>Sat, 6</b> - Saturday after first Sunday of Advent</p>
+                <p class="ml-3">Body of first Saturday of Advent, bla bla…</p>
+            </div>
+        </div>
+
+        <h3 class="text-left font-weight-bold mt-5">Summary</h3>
+
+        <ul>
+            <li>Ordomatic expects that you give to him a list of Tempral-days and of Sanctoral-days.</li>
+            <li>He calculates 3 baselines for a given year.</li>
+            <li>From the baselines, he calculates at which date will occur your Temporal-days.</li>
+            <li>He compares Temporal and Sanctoral days and determines which one of them is the winner, according to their respective forces.</li>
+            <li>Finally he outputs the final ordo, displaying headers and bodies that you have given to him for each Temporal or Sanctoral-day.</li>
+        </ul>
+
+        <h3 class="text-left font-weight-bold mt-5">Next step</h3>
+
+        <p>In the next step, you will learn how to create an account, which is the very first step in the long road that separates you from your first ordo.</p>
+    </div>
+
+    <div class="d-flex align-content-between w-100 mt-5">
+        <div class="col-5 d-flex justify-content-start">
+            <p class="btn btn-primary text-left font-weight-bold">
+                <a href={% url 'docs:what_is_an_ordo' %} class="text-white"><span class="fas fa-arrow-left mr-3"></span>What is an ordo?
+                </a>
+            </p>
+        </div>
+
+        <div class="col-2 d-flex justify-content-center">
+            <p class="text-center w-100">
+                <a href={% url 'docs:index' %} class="btn btn-warning text-white font-weight-bold">Menu</a>
+            </p>
+        </div>
+
+        <div class="col-5 d-flex justify-content-end">
+            <p class="btn btn-primary text-right font-weight-bold">
+                <a href={% url 'docs:create_an_account' %} class="text-white">Create an account<span class="fas fa-arrow-right ml-3"></span>
+                </a>
+            </p>
+        </div>
+    </div>
 {% endblock content %}

@@ -6,5 +6,39 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-    <h2>What is an ordo?</h2>
+    <h1 class="mb-5">What is an ordo?</h1>
+
+    <div class="doc-page col-8">
+        <p>An ordo is a <b>liturgical calendar</b>.</p>
+
+        <p>It indicates, for a particular community, diocese or for the Universal Church, what to celebrate each day of the liturgical year, and how.</p>
+
+        <p>A liturgical year is the superposition of two calendars: the "Temporal" and the "Sanctoral".</p>
+
+        <p>The <b>Sanctoral</b> is the easiest to understand: it is composed of the <u>fixed</u> feasts of Christ, Blessed Virgin and the Saints. For example, the feast of saint Joseph is always the 19 March.</p>
+
+        <p>The <b>Temporal</b> is composed of the <u>mobile</u> feasts of the year: Easter depends of the cycle of the Moon, and thus happens at a variable date depending of the year. Hence, the date of the Wednesday of the Ashes will happen too at a variable date, for it is 46 days before Easter. And so for all the Lent time and the Easter time.</p>
+
+        <p>So, for each day of the year, you will have at least one day of the Temporal (Advent time, Christmas time, Lent, Easter Time, Ordinary Time, Time after Pentecost, etc.), and often one (or more) days of the Sanctoral. The question is: "How do you determine which one to choose?"</p>
+
+        <p>There are some rules. Some of them are quite simple, other are more complicated. But you can imagine each day of the Temporal or the Sanctoral as an element with a given <b>force</b> (10, 20, 30, etc.). For example, the feast of saint Joseph (19 March) has a force of 90. The Palm's Sunday has a force of 120. So if those days happen the same day, you will celebrate the Palm's Sunday (and accessoirement, the feast of saint Joseph, which can't be overwritten, will be celebrated after the Easter's octave, but it is another history).</p>
+    </div>
+
+    <div class="d-flex align-content-between w-100 mt-5">
+        <div class="col-5 d-flex justify-content-start">
+        </div>
+
+        <div class="col-2 d-flex justify-content-center">
+            <p class="text-center w-100">
+                <a href={% url 'docs:index' %} class="btn btn-warning text-white font-weight-bold">Menu</a>
+            </p>
+        </div>
+
+        <div class="col-5 d-flex justify-content-end">
+            <p class="btn btn-primary text-right font-weight-bold">
+                <a href={% url 'docs:overview' %} class="text-white">Overview of Ordomatic<span class="fas fa-arrow-right ml-3"></span>
+                </a>
+            </p>
+        </div>
+    </div>
 {% endblock content %}

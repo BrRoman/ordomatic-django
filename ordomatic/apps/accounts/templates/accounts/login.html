@@ -16,56 +16,28 @@
             <!-- Username -->
             <div class="form-group">
                 {{ form.username.label_tag }}
-
-                {% if form.is_bound %}
-                    {% if form.username.errors %}
-                        {% render_field form.username class="form-control is-invalid" %}
-                        {% for error in form.username.errors %}
-                            <div class="invalid-feedback" style="display: block;">
-                                {{ error }}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        {% render_field form.username class="form-control is-valid" %}
-                    {% endif %}
-                {% else %}
-                    {% render_field form.username class="form-control" %}
-                {% endif %}
-
-                {% if form.username.help_text %}
-                    <small class="form-text text-muted">
-                        {{ form.username.help_text }}
-                    </small>
-                {% endif %}
+                {% render_field form.username class="form-control" %}
             </div>
 
             <!-- Password -->
             <div class="form-group">
                 {{ form.password.label_tag }}
-
-                {% if form.is_bound %}
-                    {% if form.password.errors %}
-                        {% render_field form.password class="form-control is-invalid" %}
-                        {% for error in form.password.errors %}
-                            <div class="invalid-feedback" style="display: block;">
-                                {{ error }}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        {% render_field form.password class="form-control is-valid" %}
-                    {% endif %}
-                {% else %}
-                    {% render_field form.password class="form-control" %}
-                {% endif %}
-
-                {% if form.password.help_text %}
-                    <small class="form-text text-muted">
-                        {{ form.password.help_text }}
-                    </small>
-                {% endif %}
+                {% render_field form.password class="form-control" %}
             </div>
+
+            <!-- Non field errors -->
+            {% if form.non_field_errors %}
+                <div class="mb-4">
+                    {% for error in form.non_field_errors %}
+                        <div class='invalid-feedback red d-block'>
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
+        <!-- Validate -->
         <div class="mb-5">
             <button type="submit" class="btn btn-primary">Validate</button>
         </div>
