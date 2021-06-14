@@ -124,8 +124,37 @@ body {
                 }
             }
 
+            .ordo,
+            .caution,
+            .terminal {
+                border-radius: 4px;
+                padding: 5px 10px 5px 10px;
+            }
+
+            .caution {
+                background-color: rgb(250, 179, 195);
+
+                .fas {
+                    color: white;
+                    font-size: 2em;
+                    margin: auto;
+                }
+            }
+
+            .highlight {
+                background-color: @grey-light;
+                border-radius: 2px;
+                padding: 2px 5px 2px 5px;
+            }
+
             .ordo {
                 background-color: white;
+            }
+
+            .terminal {
+                background-color: black;
+                color: white;
+                font-family: monospace;
             }
         }
     }
