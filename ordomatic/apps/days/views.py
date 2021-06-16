@@ -3,7 +3,7 @@
 from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
@@ -58,13 +58,16 @@ def fetch_days(calendar, year):
 def home(request, **kwargs):
     """ Home page of the days of a given calendar. """
     calendar = Calendar.objects.get(pk=kwargs['calendar'])
-    return render(
-        request,
-        'days/home.html',
-        {
-            'calendar': calendar,
-        },
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            'days/home.html',
+            {
+                'calendar': calendar,
+            },
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -84,15 +87,18 @@ def days_list(request, **kwargs):
         url = 'days/list_sancto.html'
         days = sancto
 
-    return render(
-        request,
-        url,
-        {
-            'category': category,
-            'calendar': calendar,
-            'days': days,
-        },
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            url,
+            {
+                'category': category,
+                'calendar': calendar,
+                'days': days,
+            },
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -121,15 +127,18 @@ def day_create(request, **kwargs):
     else:
         form = DayTempoForm() if category == 'tempo' else DaySanctoForm()
 
-    return render(
-        request,
-        'days/form.html',
-        {
-            'form': form,
-            'category': category,
-            'calendar': calendar,
-        }
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            'days/form.html',
+            {
+                'form': form,
+                'category': category,
+                'calendar': calendar,
+            }
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -143,15 +152,18 @@ def day_details(request, **kwargs):
     else:
         day = get_object_or_404(DaySancto, pk=kwargs['pk'])
 
-    return render(
-        request,
-        'days/details.html',
-        {
-            'category': category,
-            'calendar': calendar,
-            'day': day,
-        },
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            'days/details.html',
+            {
+                'category': category,
+                'calendar': calendar,
+                'day': day,
+            },
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -188,16 +200,19 @@ def day_update(request, **kwargs):
         form = DayTempoForm(instance=day) \
             if category == 'tempo' else DaySanctoForm(instance=day)
 
-    return render(
-        request,
-        'days/form.html',
-        {
-            'form': form,
-            'category': kwargs['category'],
-            'calendar': calendar,
-            'day': day,
-        },
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            'days/form.html',
+            {
+                'form': form,
+                'category': kwargs['category'],
+                'calendar': calendar,
+                'day': day,
+            },
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -212,24 +227,27 @@ def day_delete(request, **kwargs):
 
     calendar = Calendar.objects.get(pk=kwargs['calendar'])
 
-    if request.method == 'POST':
-        day.delete()
-        return HttpResponseRedirect(
-            reverse(
-                'days:days_list',
-                kwargs={
-                    'category': category,
-                },
-            ),
-        )
+    if calendar.owner == request.user:
+        if request.method == 'POST':
+            day.delete()
+            return HttpResponseRedirect(
+                reverse(
+                    'days:days_list',
+                    kwargs={
+                        'category': category,
+                    },
+                ),
+            )
 
+        else:
+            return render(
+                request,
+                'days/delete.html',
+                {
+                    'category': category,
+                    'calendar': calendar,
+                    'day': day,
+                },
+            )
     else:
-        return render(
-            request,
-            'days/delete.html',
-            {
-                'category': category,
-                'calendar': calendar,
-                'day': day,
-            },
-        )
+        return HttpResponseForbidden('403 Forbidden')
