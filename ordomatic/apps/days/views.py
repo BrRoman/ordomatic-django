@@ -7,10 +7,10 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
+from apps.calendars.models import Calendar
 from .dates import calculate_easter
 from .forms import DayTempoForm, DaySanctoForm
 from .models import DaySancto, DayTempo
-from apps.calendars.models import Calendar
 
 
 def fetch_days(calendar, year):
@@ -43,11 +43,14 @@ def fetch_days(calendar, year):
         key = easter + timedelta(days=easter_day.add)
         days[key] = {}
         days[key]['tempo'] = easter_day
-        sancto = DaySancto.objects.filter(
-            calendar=calendar).filter(
-            month=key.month,
-            day=key.day,
-        )
+        sancto = DaySancto.objects \
+            .filter(
+                calendar=calendar
+            ) \
+            .filter(
+                month=key.month,
+                day=key.day,
+            )
         if sancto:
             days[key]['sancto'] = sancto[0]
 
