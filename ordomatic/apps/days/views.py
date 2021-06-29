@@ -3,14 +3,14 @@
 from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
+from apps.calendars.models import Calendar
 from .dates import calculate_easter
 from .forms import DayTempoForm, DaySanctoForm
 from .models import DaySancto, DayTempo
-from apps.calendars.models import Calendar
 
 
 def fetch_days(calendar, year):
@@ -19,8 +19,16 @@ def fetch_days(calendar, year):
     days = {}  # {'date': {'tempo': object, 'sancto': object}, …}.
 
     # Christmas time:
-    christmas_days = DayTempo.objects.filter(
-        calendar=calendar).filter(baseline='start').order_by('add')
+    christmas_days = DayTempo.objects. \
+        filter(
+            calendar=calendar
+        ) \
+        .filter(
+            baseline='start'
+        ) \
+        .order_by(
+            'add'
+        )
     christmas = date(year - 1, 12, 25)
     christmas_weekday = christmas.weekday()
     start = christmas - timedelta(days=22 + christmas_weekday)
@@ -28,26 +36,40 @@ def fetch_days(calendar, year):
         key = start + timedelta(days=christmas_day.add)
         days[key] = {}
         days[key]['tempo'] = christmas_day
-        sancto = DaySancto.objects.filter(
-            month=key.month,
-            day=key.day,
-        )
+        sancto = DaySancto.objects \
+            .filter(
+                calendar=calendar
+            ) \
+            .filter(
+                month=key.month,
+                day=key.day,
+            )
         if sancto:
             days[key]['sancto'] = sancto[0]
 
     # Easter time:
-    easter_days = DayTempo.objects.filter(
-        calendar=calendar).filter(baseline='easter').order_by('add')
+    easter_days = DayTempo.objects \
+        .filter(
+            calendar=calendar) \
+        .filter(
+            baseline='easter'
+        ) \
+        .order_by(
+            'add'
+        )
     easter = calculate_easter(year)
     for index, easter_day in enumerate(easter_days):
         key = easter + timedelta(days=easter_day.add)
         days[key] = {}
         days[key]['tempo'] = easter_day
-        sancto = DaySancto.objects.filter(
-            calendar=calendar).filter(
-            month=key.month,
-            day=key.day,
-        )
+        sancto = DaySancto.objects \
+            .filter(
+                calendar=calendar
+            ) \
+            .filter(
+                month=key.month,
+                day=key.day,
+            )
         if sancto:
             days[key]['sancto'] = sancto[0]
 
@@ -58,13 +80,16 @@ def fetch_days(calendar, year):
 def home(request, **kwargs):
     """ Home page of the days of a given calendar. """
     calendar = Calendar.objects.get(pk=kwargs['calendar'])
-    return render(
-        request,
-        'days/home.html',
-        {
-            'calendar': calendar,
-        },
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            'days/home.html',
+            {
+                'calendar': calendar,
+            },
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -84,15 +109,18 @@ def days_list(request, **kwargs):
         url = 'days/list_sancto.html'
         days = sancto
 
-    return render(
-        request,
-        url,
-        {
-            'category': category,
-            'calendar': calendar,
-            'days': days,
-        },
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            url,
+            {
+                'category': category,
+                'calendar': calendar,
+                'days': days,
+            },
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -121,15 +149,18 @@ def day_create(request, **kwargs):
     else:
         form = DayTempoForm() if category == 'tempo' else DaySanctoForm()
 
-    return render(
-        request,
-        'days/form.html',
-        {
-            'form': form,
-            'category': category,
-            'calendar': calendar,
-        }
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            'days/form.html',
+            {
+                'form': form,
+                'category': category,
+                'calendar': calendar,
+            }
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -143,15 +174,18 @@ def day_details(request, **kwargs):
     else:
         day = get_object_or_404(DaySancto, pk=kwargs['pk'])
 
-    return render(
-        request,
-        'days/details.html',
-        {
-            'category': category,
-            'calendar': calendar,
-            'day': day,
-        },
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            'days/details.html',
+            {
+                'category': category,
+                'calendar': calendar,
+                'day': day,
+            },
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -188,16 +222,19 @@ def day_update(request, **kwargs):
         form = DayTempoForm(instance=day) \
             if category == 'tempo' else DaySanctoForm(instance=day)
 
-    return render(
-        request,
-        'days/form.html',
-        {
-            'form': form,
-            'category': kwargs['category'],
-            'calendar': calendar,
-            'day': day,
-        },
-    )
+    if calendar.owner == request.user:
+        return render(
+            request,
+            'days/form.html',
+            {
+                'form': form,
+                'category': kwargs['category'],
+                'calendar': calendar,
+                'day': day,
+            },
+        )
+    else:
+        return HttpResponseForbidden('403 Forbidden')
 
 
 @login_required
@@ -212,24 +249,27 @@ def day_delete(request, **kwargs):
 
     calendar = Calendar.objects.get(pk=kwargs['calendar'])
 
-    if request.method == 'POST':
-        day.delete()
-        return HttpResponseRedirect(
-            reverse(
-                'days:days_list',
-                kwargs={
-                    'category': category,
-                },
-            ),
-        )
+    if calendar.owner == request.user:
+        if request.method == 'POST':
+            day.delete()
+            return HttpResponseRedirect(
+                reverse(
+                    'days:days_list',
+                    kwargs={
+                        'category': category,
+                    },
+                ),
+            )
 
+        else:
+            return render(
+                request,
+                'days/delete.html',
+                {
+                    'category': category,
+                    'calendar': calendar,
+                    'day': day,
+                },
+            )
     else:
-        return render(
-            request,
-            'days/delete.html',
-            {
-                'category': category,
-                'calendar': calendar,
-                'day': day,
-            },
-        )
+        return HttpResponseForbidden('403 Forbidden')
