@@ -28,10 +28,14 @@ def fetch_days(calendar, year):
         key = start + timedelta(days=christmas_day.add)
         days[key] = {}
         days[key]['tempo'] = christmas_day
-        sancto = DaySancto.objects.filter(
-            month=key.month,
-            day=key.day,
-        )
+        sancto = DaySancto.objects \
+            .filter(
+                calendar=calendar
+            ) \
+            .filter(
+                month=key.month,
+                day=key.day,
+            )
         if sancto:
             days[key]['sancto'] = sancto[0]
 
