@@ -38,15 +38,15 @@ Each Ordo will contain:
 ### TODO
 <span style="color: green;">✔</span> Starting Django application.
 
-◻ Main template.
+<span style="color: green;">✔</span> Main template.
 
 ◻ Routing and CRUD's pages for Users, Ordos, Days and Snippets.
 
-◻ Installing on [pythonanywhere.com](https://www.pythonanywhere.com/)
+<span style="color: green;">✔</span> Installing on [pythonanywhere.com](https://www.pythonanywhere.com/)
 
-◻ Models.
+<span style="color: green;">✔</span> Models.
 
-◻ FIXME: installing mysqlclient.
+<span style="color: green;">✔</span> FIXME: installing mysqlclient.
 
 ◻ Authentication and security.
 
