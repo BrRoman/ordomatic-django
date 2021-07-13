@@ -61,7 +61,7 @@ class DaySancto(Day):
                 'October',
                 'November',
                 'December',
-            ][self.day - 1],
+            ][self.month - 1],
             self.day,
             self.calendar
         )
