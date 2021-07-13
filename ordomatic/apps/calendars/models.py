@@ -14,6 +14,13 @@ class Calendar(models.Model):
     name = models.CharField(
         max_length=255,
     )
+    base = models.CharField(
+        max_length=2,
+        choices=[
+            ('OF', 'Ordinary Form'),
+            ('EF', 'Extraordinary Form'),
+        ]
+    )
 
     def __str__(self):
         return self.name

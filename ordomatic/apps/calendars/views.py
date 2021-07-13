@@ -5,6 +5,9 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
+from utils.ordinary_form import populate as populate_OF
+from utils.extraordinary_form import populate as populate_EF
+
 from .forms import CalendarForm
 from .models import Calendar
 
@@ -31,6 +34,10 @@ def calendar_create(request):
             calendar = form.save(commit=False)
             calendar.owner = request.user
             calendar.save()
+            if calendar.base == 'OF':
+                populate_OF(calendar)
+            elif calendar.base == 'EF':
+                populate_EF(calendar)
             return HttpResponseRedirect(reverse('calendars:calendars_list'))
 
     else:
@@ -49,65 +56,65 @@ def calendar_create(request):
 def calendar_details(request, **kwargs):
     """ Details of a calendar. """
     calendar = get_object_or_404(Calendar, pk=kwargs['pk'])
-    if calendar.owner == request.user:
-        return render(
-            request,
-            'calendars/details.html',
-            {
-                'calendar': calendar,
-            }
-        )
-    else:
+    if calendar.owner != request.user:
         return HttpResponseForbidden('403 Forbidden')
+
+    return render(
+        request,
+        'calendars/details.html',
+        {
+            'calendar': calendar,
+        }
+    )
 
 
 @login_required
 def calendar_update(request, **kwargs):
     """ Update a calendar. """
     calendar = get_object_or_404(Calendar, pk=kwargs['pk'])
-    if calendar.owner == request.user:
-        if request.method == 'POST':
-            form = CalendarForm(request.POST, instance=calendar)
-            if form.is_valid():
-                calendar = form.save(commit=False)
-                calendar.owner = request.user
-                calendar.save()
-                return HttpResponseRedirect(reverse('calendars:calendars_list'))
-
-        else:
-            form = CalendarForm(instance=calendar)
-
-        return render(
-            request,
-            'calendars/form.html',
-            {
-                'form': form,
-                'calendar': calendar,
-            }
-        )
-    else:
+    if calendar.owner != request.user:
         return HttpResponseForbidden('403 Forbidden')
+
+    if request.method == 'POST':
+        form = CalendarForm(request.POST, instance=calendar)
+        if form.is_valid():
+            calendar = form.save(commit=False)
+            calendar.owner = request.user
+            calendar.save()
+            return HttpResponseRedirect(reverse('calendars:calendars_list'))
+
+    else:
+        form = CalendarForm(instance=calendar)
+
+    return render(
+        request,
+        'calendars/form.html',
+        {
+            'form': form,
+            'calendar': calendar,
+        }
+    )
 
 
 @login_required
 def calendar_delete(request, **kwargs):
     """ Delete a calendar. """
     calendar = get_object_or_404(Calendar, pk=kwargs['pk'])
-    if calendar.owner == request.user:
-        if request.method == 'POST':
-            form = CalendarForm(request.POST, instance=calendar)
-            calendar.delete()
-            return HttpResponseRedirect(reverse('calendars:calendars_list'))
-
-        form = CalendarForm(instance=calendar)
-
-        return render(
-            request,
-            'calendars/delete.html',
-            {
-                'form': form,
-                'calendar': calendar,
-            },
-        )
-    else:
+    if calendar.owner != request.user:
         return HttpResponseForbidden('403 Forbidden')
+
+    if request.method == 'POST':
+        form = CalendarForm(request.POST, instance=calendar)
+        calendar.delete()
+        return HttpResponseRedirect(reverse('calendars:calendars_list'))
+
+    form = CalendarForm(instance=calendar)
+
+    return render(
+        request,
+        'calendars/delete.html',
+        {
+            'form': form,
+            'calendar': calendar,
+        },
+    )

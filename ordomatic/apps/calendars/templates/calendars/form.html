@@ -21,32 +21,60 @@
     {% endif %}
 
     <form class="d-flex flex-column align-items-center w-100 mb-3" method="post" novalidate>
-        {% csrf_token %}
+        <div class="col-4">
+            {% csrf_token %}
 
-        <!-- Name -->
-        <div class="form-group">
-            {{ form.name.label_tag }}
+            <!-- Name -->
+            <div class="form-group">
+                {{ form.name.label_tag }}
 
-            {% if form.is_bound %}
-                {% if form.name.errors %}
-                    {% render_field form.name class="form-control is-invalid" %}
-                    {% for error in form.name.errors %}
-                        <div class="invalid-feedback" style="display: block;">
-                            {{ error }}
-                        </div>
-                    {% endfor %}
+                {% if form.is_bound %}
+                    {% if form.name.errors %}
+                        {% render_field form.name class="form-control is-invalid" %}
+                        {% for error in form.name.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.name class="form-control is-valid" %}
+                    {% endif %}
                 {% else %}
-                    {% render_field form.name class="form-control is-valid" %}
+                    {% render_field form.name class="form-control" %}
                 {% endif %}
-            {% else %}
-                {% render_field form.name class="form-control" %}
-            {% endif %}
 
-            {% if form.name.help_text %}
-                <small class="form-text text-muted">
-                    {{ form.name.help_text }}
-                </small>
-            {% endif %}
+                {% if form.name.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.name.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Base -->
+            <div class="form-group">
+                {{ form.base.label_tag }}
+
+                {% if form.is_bound %}
+                    {% if form.base.errors %}
+                        {% render_field form.base class="form-control is-invalid" %}
+                        {% for error in form.base.errors %}
+                            <div class="invalid-feedback" style="display: block;">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.base class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.base class="form-control" %}
+                {% endif %}
+
+                {% if form.base.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.base.help_text }}
+                    </small>
+                {% endif %}
+            </div>
         </div>
 
         <!-- Validation -->
