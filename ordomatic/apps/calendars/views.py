@@ -5,6 +5,9 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
+from utils.ordinary_form import populate as populate_OF
+from utils.extraordinary_form import populate as populate_EF
+
 from .forms import CalendarForm
 from .models import Calendar
 
@@ -31,6 +34,10 @@ def calendar_create(request):
             calendar = form.save(commit=False)
             calendar.owner = request.user
             calendar.save()
+            if calendar.base == 'OF':
+                populate_OF(calendar)
+            elif calendar.base == 'EF':
+                populate_EF(calendar)
             return HttpResponseRedirect(reverse('calendars:calendars_list'))
 
     else:
