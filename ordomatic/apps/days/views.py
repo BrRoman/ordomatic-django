@@ -18,9 +18,9 @@ def fetch_days(calendar, year):
     calendar = Calendar.objects.get(pk=calendar)
     days = {}  # {'date': {'tempo': object, 'sancto': object}, …}.
 
-    # Christmas time:
-    christmas_days = DayTempo.objects. \
-        filter(
+    # Start time (Advent):
+    start_days = DayTempo.objects \
+        .filter(
             calendar=calendar
         ) \
         .filter(
@@ -32,8 +32,34 @@ def fetch_days(calendar, year):
     christmas = date(year - 1, 12, 25)
     christmas_weekday = christmas.weekday()
     start = christmas - timedelta(days=22 + christmas_weekday)
-    for index, christmas_day in enumerate(christmas_days):
+    for index, christmas_day in enumerate(start_days):
         key = start + timedelta(days=christmas_day.add)
+        days[key] = {}
+        days[key]['tempo'] = christmas_day
+        sancto = DaySancto.objects \
+            .filter(
+                calendar=calendar
+            ) \
+            .filter(
+                month=key.month,
+                day=key.day,
+            )
+        if sancto:
+            days[key]['sancto'] = sancto[0]
+
+    # Christmas time:
+    christmas_days = DayTempo.objects \
+        .filter(
+            calendar=calendar
+        )\
+        .filter(
+            baseline='christmas'
+        )\
+        .order_by(
+            'add'
+        )
+    for index, christmas_day in enumerate(christmas_days):
+        key = christmas + timedelta(days=christmas_day.add)
         days[key] = {}
         days[key]['tempo'] = christmas_day
         sancto = DaySancto.objects \
