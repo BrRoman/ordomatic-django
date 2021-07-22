@@ -3,9 +3,10 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import PasswordChangeView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 
 def signup(request):
@@ -57,12 +58,10 @@ def update(request):
     )
 
 
-def change_password(request):
+class ChangePassword(PasswordChangeView):
     """ Change password view. """
-    return render(
-        request,
-        'accounts/change_password.html',
-    )
+    template_name = 'accounts/change_password.html'
+    success_url = reverse_lazy('accounts:change_password_done')
 
 
 def change_password_done(request):
