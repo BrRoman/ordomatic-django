@@ -1,7 +1,8 @@
 {% extends 'main.html' %}
 
 {% block breadcrumbs %}
-    <li class="breadcrumb-item active">Update account</li>
+    <li class="breadcrumb-item"><a href={% url 'accounts:details' %}>My account</a></li>
+    <li class="breadcrumb-item active">Update</li>
 {% endblock breadcrumbs %}
 
 {% block content %}
