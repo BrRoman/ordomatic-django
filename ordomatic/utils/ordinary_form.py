@@ -99,8 +99,3 @@ def populate(calendar):
         force=100,
         header='The Immaculate Conception of the Blessed Virgin - Solennity',
     )
-
-
-def populate_extraordinary_form(calendar):
-    """ Populate the given calendar with generic days of EF. """
-    return(calendar)

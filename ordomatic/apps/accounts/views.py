@@ -39,7 +39,6 @@ class Login(auth_views.LoginView):
 
 class Logout(auth_views.LogoutView):
     """ Logout view. """
-    pass
 
 
 def details(request):
