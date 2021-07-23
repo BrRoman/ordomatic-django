@@ -2,8 +2,9 @@
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView, PasswordResetConfirmView, PasswordResetView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
@@ -42,6 +43,7 @@ class Logout(auth_views.LogoutView):
     """ Logout view. """
 
 
+@login_required
 def details(request):
     """ Details view. """
     return render(
@@ -50,6 +52,7 @@ def details(request):
     )
 
 
+@login_required
 def update(request):
     """ Update view. """
     return render(
@@ -72,20 +75,25 @@ def change_password_done(request):
     )
 
 
-def reset_password(request):
+class ResetPassword(PasswordResetView):
     """ Reset password view. """
+    template_name = 'accounts/reset_password.html'
+    email_template_name = 'accounts/reset_password_email.html'
+    success_url = reverse_lazy('accounts:reset_password_done')
+
+
+def reset_password_done(request):
+    """ Reset password done view."""
     return render(
         request,
-        'accounts/reset_password.html',
+        'accounts/reset_password_done.html',
     )
 
 
-def reset_password_confirm(request):
+class PasswordResetConfirm(PasswordResetConfirmView):
     """ Reset password confirm view. """
-    return render(
-        request,
-        'accounts/reset_password_confirm.html',
-    )
+    template_name = 'accounts/reset_password_confirm.html'
+    success_url = reverse_lazy('accounts:reset_password_complete')
 
 
 def reset_password_complete(request):
